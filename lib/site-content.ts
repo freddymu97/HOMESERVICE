@@ -336,8 +336,22 @@ export const siteContent = {
 } as const
 
 export type SiteContent = typeof siteContent
-export type PlumbingContent = (typeof siteContent.verticals)["plomeria"]
-export type ServiceItem = PlumbingContent["services"]["items"][number]
+
+type WidenContent<T> = T extends string
+  ? string
+  : T extends number
+    ? number
+    : T extends boolean
+      ? boolean
+      : T extends ReadonlyArray<infer Item>
+        ? ReadonlyArray<WidenContent<Item>>
+        : T extends object
+          ? { [Key in keyof T]: WidenContent<T[Key]> }
+          : T
+
+export type PageContent = WidenContent<(typeof siteContent.verticals)["plomeria"]>
+export type PlumbingContent = PageContent
+export type ServiceItem = PageContent["services"]["items"][number]
 
 export function getSiteUrl() {
   const configuredUrl =

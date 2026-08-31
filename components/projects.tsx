@@ -1,12 +1,12 @@
 "use client"
 
-import type { PlumbingContent } from "@/lib/site-content"
+import type { PageContent } from "@/lib/site-content"
 
 import { useEffect, useRef, useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 import { AssetSlot } from "@/components/asset-slot"
 
-type ServicesContent = Omit<PlumbingContent["services"], "items"> & {
+type ServicesContent = Omit<PageContent["services"], "items"> & {
   items: ReadonlyArray<{
     id: number
     title: string

@@ -1,13 +1,13 @@
 "use client"
 
-import type { PlumbingContent, SiteContent } from "@/lib/site-content"
+import type { PageContent, SiteContent } from "@/lib/site-content"
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { ArrowDown } from "lucide-react"
 
 type HeroProps = {
-  content: PlumbingContent["hero"]
+  content: PageContent["hero"]
   imagery: SiteContent["imagery"]
 }
 

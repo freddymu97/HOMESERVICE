@@ -1,10 +1,10 @@
-import type { PlumbingContent, SiteContent } from "@/lib/site-content"
+import type { PageContent, SiteContent } from "@/lib/site-content"
 
 type FooterProps = {
   brand: SiteContent["brand"]
   contact: SiteContent["contact"]
   content: SiteContent["footer"]
-  services: PlumbingContent["services"]["items"]
+  services: PageContent["services"]["items"]
 }
 
 export function Footer({ brand, contact, content, services }: FooterProps) {

@@ -1,8 +1,8 @@
-import type { PlumbingContent } from "@/lib/site-content"
+import type { PageContent } from "@/lib/site-content"
 
 import { MessageCircle } from "lucide-react"
 
-export function FloatingCTA({ content }: { content: PlumbingContent["floatingCta"] }) {
+export function FloatingCTA({ content }: { content: PageContent["floatingCta"] }) {
   return (
     <a
       href={content.href}

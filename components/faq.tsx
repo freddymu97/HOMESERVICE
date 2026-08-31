@@ -1,11 +1,11 @@
 "use client"
 
-import type { PlumbingContent } from "@/lib/site-content"
+import type { PageContent } from "@/lib/site-content"
 
 import { useState } from "react"
 import { Plus } from "lucide-react"
 
-export function FAQ({ content }: { content: PlumbingContent["faq"] }) {
+export function FAQ({ content }: { content: PageContent["faq"] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   const toggleQuestion = (index: number) => setOpenIndex(openIndex === index ? null : index)

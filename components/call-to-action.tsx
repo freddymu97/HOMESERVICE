@@ -1,9 +1,9 @@
-import type { PlumbingContent } from "@/lib/site-content"
+import type { PageContent } from "@/lib/site-content"
 
 import { ArrowRight } from "lucide-react"
 import { HighlightedText } from "./highlighted-text"
 
-export function CallToAction({ content }: { content: PlumbingContent["coverage"] }) {
+export function CallToAction({ content }: { content: PageContent["coverage"] }) {
   return (
     <section id={content.id} className="py-32 md:py-29 bg-foreground text-primary-foreground">
       <div className="container mx-auto px-6 md:px-12">

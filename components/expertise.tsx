@@ -1,6 +1,6 @@
 "use client"
 
-import type { PlumbingContent } from "@/lib/site-content"
+import type { PageContent } from "@/lib/site-content"
 
 import { useEffect, useRef, useState } from "react"
 import { BadgeDollarSign, CalendarDays, PackageCheck, SearchCheck, ShieldCheck, Wrench } from "lucide-react"
@@ -8,7 +8,7 @@ import { HighlightedText } from "./highlighted-text"
 
 const reasonIcons = [SearchCheck, BadgeDollarSign, Wrench, PackageCheck, CalendarDays, ShieldCheck] as const
 
-export function Expertise({ content }: { content: PlumbingContent["reasons"] }) {
+export function Expertise({ content }: { content: PageContent["reasons"] }) {
   const [visibleItems, setVisibleItems] = useState<number[]>([])
   const sectionRef = useRef<HTMLElement>(null)
   const itemRefs = useRef<(HTMLDivElement | null)[]>([])
