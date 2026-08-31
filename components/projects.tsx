@@ -5,6 +5,7 @@ import type { PageContent } from "@/lib/site-content"
 import { useEffect, useRef, useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 import { AssetSlot } from "@/components/asset-slot"
+import { ChipList } from "@/components/chip-list"
 
 type ServicesContent = Omit<PageContent["services"], "items"> & {
   items: ReadonlyArray<{
@@ -27,6 +28,10 @@ type ServicesContent = Omit<PageContent["services"], "items"> & {
     linkLabel: string
     href: string
   }>
+  additionalServices?: {
+    label: string
+    items: ReadonlyArray<string>
+  }
 }
 
 export function Projects({ content }: { content: ServicesContent }) {
@@ -150,6 +155,13 @@ export function Projects({ content }: { content: ServicesContent }) {
         ) : (
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">{content.items.map(renderService)}</div>
         )}
+
+        {content.additionalServices ? (
+          <div className="mt-12 border-t border-border pt-8">
+            <h3 className="mb-5 text-sm font-medium">{content.additionalServices.label}</h3>
+            <ChipList items={content.additionalServices.items} />
+          </div>
+        ) : null}
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border pt-8 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">{content.schedule}</p>

@@ -1,6 +1,7 @@
 import type { PageContent } from "@/lib/site-content"
 
 import { ArrowRight } from "lucide-react"
+import { ChipList } from "./chip-list"
 import { HighlightedText } from "./highlighted-text"
 
 export function CallToAction({ content }: { content: PageContent["coverage"] }) {
@@ -16,11 +17,7 @@ export function CallToAction({ content }: { content: PageContent["coverage"] }) 
 
           <p className="text-primary-foreground/70 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">{content.intro}</p>
 
-          <div className="mb-12 flex flex-wrap justify-center gap-3">
-            {content.sectors.map((sector) => (
-              <span key={sector} className="border border-primary-foreground/25 px-4 py-2 text-sm text-primary-foreground/80">{sector}</span>
-            ))}
-          </div>
+          <ChipList items={content.sectors} tone="dark" className="mb-12 justify-center" />
 
           <div className="flex justify-center">
             <a

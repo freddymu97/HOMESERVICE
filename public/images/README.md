@@ -10,5 +10,11 @@ Las imágenes de servicio deben entregarse en dos encuadres del mismo motivo: 12
 | `public/images/servicios/tuberias-conexiones.jpg` | Técnico de HomeService revisando conexiones de una tubería de agua |
 | `public/images/servicios/bombas-presion.jpg` | Técnico de HomeService revisando una bomba de agua residencial |
 | `public/images/servicios/instalaciones-mantenimiento.jpg` | Técnico de HomeService instalando un punto de agua en una vivienda |
+| `public/images/servicios/cortocircuitos.jpg` | Técnico de HomeService diagnosticando un cortocircuito en Quito |
+| `public/images/servicios/tableros-breakers.jpg` | Técnico de HomeService revisando un tablero eléctrico en Quito |
+| `public/images/servicios/puntos-tomacorrientes.jpg` | Técnico de HomeService instalando un tomacorriente en Quito |
+| `public/images/servicios/revision-cableado.jpg` | Técnico de HomeService revisando cableado eléctrico en Quito |
+| `public/images/servicios/puesta-a-tierra.jpg` | Técnico de HomeService verificando una puesta a tierra en Quito |
+| `public/images/servicios/instalaciones-electricas.jpg` | Técnico de HomeService realizando una conexión eléctrica en Quito |
 
 No se deben rotular estas imágenes como trabajos realizados, casos reales o clientes si no existe evidencia verificable.
