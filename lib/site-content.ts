@@ -1,6 +1,8 @@
 export const PHONE_E164 = "+593982811068"
 export const PHONE_WA = "593982811068"
-export const SITE_URL = "https://homeservicequito.com"
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://homeservicequito.com"
+).replace(/\/+$/, "")
 
 export const HOURS = {
   label: "Todos los días, 7:30 a 19:30",
