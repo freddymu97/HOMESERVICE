@@ -1,5 +1,6 @@
 export const PHONE_E164 = "+593982811068"
 export const PHONE_WA = "593982811068"
+export const SITE_URL = "https://homeservicequito.com"
 
 export const HOURS = {
   label: "Todos los días, 7:30 a 19:30",
@@ -24,7 +25,7 @@ export const siteContent = {
   contact: {
     phoneDisplay: "+593 98 281 1068",
     phoneHref: `tel:${PHONE_E164}`,
-    whatsappHref: whatsappHref("Hola HomeService, deseo información sobre sus servicios de plomería."),
+    whatsappHref: whatsappHref("Hola HomeService, deseo información sobre un servicio a domicilio."),
     phoneLabel: "Teléfono",
     whatsappLabel: "WhatsApp",
     hours: HOURS,
@@ -846,17 +847,8 @@ export const siteContent = {
     copyrightSuffix: "HomeService. Todos los derechos reservados.",
   },
   seo: {
-    title: "Plomeros a domicilio en Quito | Fugas, destapes y grifería | HomeService",
-    description:
-      "Servicio de plomería a domicilio en Quito y valles: fugas, cañerías tapadas, grifería, sanitarios y tuberías. Atendemos todos los días de 7:30 a 19:30.",
     locale: "es_EC",
     twitterCard: "summary_large_image",
-    ogImage: {
-      src: "/brand/og-image.jpg",
-      width: 1200,
-      height: 630,
-      alt: "HomeService, plomería a domicilio en Quito",
-    },
   },
 } as const
 
@@ -880,9 +872,5 @@ export type PlumbingContent = PageContent
 export type ServiceItem = PageContent["services"]["items"][number]
 
 export function getSiteUrl() {
-  const configuredUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ?? process.env.VERCEL_URL ?? "http://localhost:3000"
-  const absoluteUrl = /^https?:\/\//.test(configuredUrl) ? configuredUrl : `https://${configuredUrl}`
-
-  return new URL(absoluteUrl.endsWith("/") ? absoluteUrl : `${absoluteUrl}/`)
+  return new URL(`${SITE_URL}/`)
 }

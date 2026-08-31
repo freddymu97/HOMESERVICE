@@ -1,40 +1,13 @@
 import type React from "react"
 import type { Metadata } from "next"
 
-import { getSiteUrl, siteContent } from "@/lib/site-content"
+import { getSiteUrl } from "@/lib/site-content"
 import "./globals.css"
 
 const siteUrl = getSiteUrl()
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
-  title: siteContent.seo.title,
-  description: siteContent.seo.description,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: siteContent.seo.title,
-    description: siteContent.seo.description,
-    url: "/",
-    siteName: siteContent.brand.name,
-    locale: siteContent.seo.locale,
-    type: "website",
-    images: [
-      {
-        url: siteContent.seo.ogImage.src,
-        width: siteContent.seo.ogImage.width,
-        height: siteContent.seo.ogImage.height,
-        alt: siteContent.seo.ogImage.alt,
-      },
-    ],
-  },
-  twitter: {
-    card: siteContent.seo.twitterCard,
-    title: siteContent.seo.title,
-    description: siteContent.seo.description,
-    images: [siteContent.seo.ogImage.src],
-  },
   icons: {
     icon: "/brand/favicon.ico",
   },
