@@ -121,7 +121,7 @@ export function Hero({ content, imagery }: HeroProps) {
       {content.breadcrumb ? (
         <nav
           aria-label="Migas de pan"
-          className="absolute left-6 top-20 z-30 bg-black/35 px-3 py-2 text-xs tracking-[0.18em] text-white/85 backdrop-blur-sm md:left-12 md:text-sm"
+          className="absolute bottom-6 left-6 z-30 bg-black/35 px-3 py-2 text-xs tracking-[0.18em] text-white/85 backdrop-blur-sm md:left-12 md:text-sm"
         >
           <a
             href={content.breadcrumb.homeHref}
