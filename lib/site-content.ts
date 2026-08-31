@@ -61,14 +61,28 @@ export const siteContent = {
   },
   verticals: {
     plomeria: {
+      seo: {
+        title: "Plomero en Quito a domicilio | Fugas, destapes y grifería | HomeService",
+        description:
+          "Plomeros a domicilio en Quito y valles: fugas de agua, cañerías tapadas, grifería, sanitarios y tuberías. Atendemos todos los días de 7:30 a 19:30.",
+        canonical: "https://homeservicequito.com/plomero-quito",
+        ogImage: "/brand/og-image-plomeria.jpg",
+        ogImageFallback: "/brand/og-image.jpg",
+        ogImageAlt: "HomeService, plomería a domicilio en Quito",
+      },
       hero: {
         eyebrow: "HOMESERVICE · PLOMERÍA A DOMICILIO EN QUITO",
-        title: "Plomeros a domicilio en Quito",
+        title: "Plomero en Quito a domicilio",
         subtitleMobile: "Reparamos fugas, cañerías tapadas, grifería, sanitarios e instalaciones de agua en casas, departamentos y locales",
         subtitleDesktopEnd: "de Quito y sus valles",
         microcopy:
           "Revisamos, te explicamos qué tiene la instalación y conversamos el costo antes de empezar.",
         chips: ["Fugas. Cañerías. Grifería.", HOURS.sevenDays],
+        breadcrumb: {
+          homeLabel: "Inicio",
+          homeHref: "/",
+          currentLabel: "Plomero en Quito",
+        },
         primaryCta: {
           label: "Solicitar servicio por WhatsApp",
           href: whatsappHref(
@@ -100,7 +114,7 @@ export const siteContent = {
               src: "/images/servicios/fugas-de-agua.jpg",
               desktopDimensions: "1200 × 1500 px",
               mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService reparando una fuga de agua en una tubería",
+              alt: "Técnico de HomeService reparando una fuga de agua en Quito",
             },
             // slug: "fugas-de-agua",
           },
@@ -113,7 +127,7 @@ export const siteContent = {
               src: "/images/servicios/destape-desagues.jpg",
               desktopDimensions: "1200 × 1500 px",
               mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService destapando un desagüe con equipo profesional",
+              alt: "Técnico de HomeService destapando un desagüe en Quito",
             },
             // slug: "destape-desagues",
           },
@@ -126,7 +140,7 @@ export const siteContent = {
               src: "/images/servicios/griferia-sanitarios.jpg",
               desktopDimensions: "1200 × 1500 px",
               mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService ajustando la grifería de un lavamanos",
+              alt: "Técnico de HomeService ajustando la grifería de un lavamanos en Quito",
             },
             // slug: "griferia-sanitarios",
           },
@@ -139,7 +153,7 @@ export const siteContent = {
               src: "/images/servicios/tuberias-conexiones.jpg",
               desktopDimensions: "1200 × 1500 px",
               mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService revisando conexiones de una tubería de agua",
+              alt: "Técnico de HomeService revisando conexiones de tubería en Quito",
             },
             // slug: "tuberias-conexiones",
           },
@@ -152,7 +166,7 @@ export const siteContent = {
               src: "/images/servicios/bombas-presion.jpg",
               desktopDimensions: "1200 × 1500 px",
               mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService revisando una bomba de agua residencial",
+              alt: "Técnico de HomeService revisando una bomba de agua en Quito",
             },
             // slug: "bombas-presion",
           },
@@ -165,7 +179,7 @@ export const siteContent = {
               src: "/images/servicios/instalaciones-mantenimiento.jpg",
               desktopDimensions: "1200 × 1500 px",
               mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService instalando un punto de agua en una vivienda",
+              alt: "Técnico de HomeService instalando un punto de agua en Quito",
             },
             // slug: "instalaciones-mantenimiento",
           },
@@ -294,9 +308,9 @@ export const siteContent = {
             answer: "Procuramos resolver sin romper. Si el caso lo exige, se te explica antes de abrir.",
           },
           {
-            question: "¿A qué sectores de Quito llegan?",
+            question: "¿Cómo encuentro un plomero cerca de mí?",
             answer:
-              "A Quito y los valles: norte, centro, sur, Cumbayá, Tumbaco y Los Chillos, entre otros. Escríbenos tu sector.",
+              "Escríbenos con tu sector de Quito o los valles y te confirmamos la cobertura. Si buscas un plomero urgente, coordinamos según la agenda del día. Este oficio también es conocido como gasfitero en Ecuador.",
           },
         ],
         cta: {
@@ -311,6 +325,11 @@ export const siteContent = {
         href: whatsappHref("Hola, necesito un plomero a domicilio en Quito."),
         ariaLabel: "Solicitar un plomero a domicilio por WhatsApp",
         analytics: "cta_whatsapp_flotante_click",
+      },
+      crossLink: {
+        prefix: "¿El problema es eléctrico? Mira nuestro servicio de",
+        label: "electricista en Quito",
+        href: "/electricista-quito",
       },
     },
   },
