@@ -29,20 +29,40 @@ export const siteContent = {
     whatsappLabel: "WhatsApp",
     hours: HOURS,
   },
-  header: {
-    navigation: [
-      { label: "Servicios", href: "#servicios" },
-      { label: "Cómo funciona", href: "#como-funciona" },
-      { label: "Cobertura", href: "#cobertura" },
-      { label: "Preguntas", href: "#preguntas" },
-    ],
-    openMenuAriaLabel: "Abrir menú",
-    closeMenuAriaLabel: "Cerrar menú",
-    cta: {
-      label: "Solicitar servicio",
-      href: whatsappHref("Hola HomeService, necesito un plomero en Quito."),
-      ariaLabel: "Solicitar servicio de plomería por WhatsApp",
-      analytics: "cta_whatsapp_navbar_click",
+  headers: {
+    home: {
+      navigation: [
+        { label: "Inicio", href: "/" },
+        { label: "Plomería", href: "/plomero-quito" },
+        { label: "Electricidad", href: "/electricista-quito" },
+        { label: "Cobertura", href: "#cobertura" },
+        { label: "Preguntas", href: "#preguntas" },
+      ],
+      openMenuAriaLabel: "Abrir menú",
+      closeMenuAriaLabel: "Cerrar menú",
+      cta: {
+        label: "Solicitar servicio",
+        href: whatsappHref("Hola HomeService, necesito un servicio a domicilio en Quito."),
+        ariaLabel: "Solicitar un servicio a domicilio por WhatsApp",
+        analytics: "cta_whatsapp_navbar_click",
+      },
+    },
+    plomeria: {
+      navigation: [
+        { label: "Inicio", href: "/" },
+        { label: "Plomería", href: "/plomero-quito" },
+        { label: "Electricidad", href: "/electricista-quito" },
+        { label: "Cobertura", href: "#cobertura" },
+        { label: "Preguntas", href: "#preguntas" },
+      ],
+      openMenuAriaLabel: "Abrir menú",
+      closeMenuAriaLabel: "Cerrar menú",
+      cta: {
+        label: "Solicitar servicio",
+        href: whatsappHref("Hola HomeService, necesito un plomero en Quito."),
+        ariaLabel: "Solicitar servicio de plomería por WhatsApp",
+        analytics: "cta_whatsapp_navbar_click",
+      },
     },
   },
   imagery: {
@@ -332,11 +352,258 @@ export const siteContent = {
         href: "/electricista-quito",
       },
     },
+    home: {
+      seo: {
+        title: "HomeService | Plomería y electricidad a domicilio en Quito",
+        description:
+          "Servicio a domicilio de plomería y electricidad en Quito y valles. Fugas, destapes, grifería, cortocircuitos, tableros e instalaciones. Todos los días de 7:30 a 19:30.",
+        canonical: "https://homeservicequito.com/",
+        ogImage: "/brand/og-image.jpg",
+        ogImageAlt: "HomeService, plomería y electricidad a domicilio en Quito",
+      },
+      hero: {
+        eyebrow: "HOMESERVICE · ASISTENCIA A DOMICILIO EN QUITO",
+        title: "Plomería y electricidad a domicilio en Quito",
+        subtitleMobile:
+          "Un solo contacto para los dos problemas que no pueden esperar en casa: el agua y la luz. Atendemos casas, departamentos, oficinas y locales de Quito y sus valles",
+        subtitleDesktopEnd: "",
+        microcopy:
+          "Revisamos, te explicamos qué tiene la instalación y conversamos el costo antes de empezar.",
+        chips: ["Plomería. Electricidad.", HOURS.sevenDays],
+        primaryCta: {
+          label: "Solicitar servicio por WhatsApp",
+          href: whatsappHref(
+            "Hola HomeService, necesito ayuda con un problema en casa. El servicio que necesito es: ",
+          ),
+          ariaLabel: "Solicitar ayuda a domicilio por WhatsApp",
+          analytics: "cta_whatsapp_hero_home_click",
+        },
+        secondaryCta: {
+          label: "Llamar ahora",
+          href: `tel:${PHONE_E164}`,
+          ariaLabel: "Llamar a HomeService",
+          analytics: "cta_llamada_hero_home_click",
+        },
+      },
+      services: {
+        id: "servicios",
+        eyebrow: "SERVICIOS",
+        title: "Dos servicios, un mismo equipo",
+        intro:
+          "Atendemos a domicilio lo que se daña en el agua y en la luz de tu casa o tu local. Elige el servicio que necesitas y te atendemos el mismo día o el siguiente.",
+        items: [
+          {
+            id: 1,
+            title: "Fugas de agua",
+            description: "Ubicación y reparación de fugas en tuberías, paredes y pisos.",
+            asset: {
+              filename: "fugas-de-agua.jpg",
+              src: "/images/servicios/fugas-de-agua.jpg",
+              desktopDimensions: "1200 × 1500 px",
+              mobileDimensions: "1600 × 1000 px",
+              alt: "Técnico de HomeService reparando una fuga de agua en Quito",
+            },
+          },
+          {
+            id: 2,
+            title: "Cañerías y desagües tapados",
+            description: "Destape de inodoros, fregaderos, duchas y cajas de revisión.",
+            asset: {
+              filename: "destape-desagues.jpg",
+              src: "/images/servicios/destape-desagues.jpg",
+              desktopDimensions: "1200 × 1500 px",
+              mobileDimensions: "1600 × 1000 px",
+              alt: "Técnico de HomeService destapando un desagüe en Quito",
+            },
+          },
+          {
+            id: 3,
+            title: "Grifería y sanitarios",
+            description: "Cambio y reparación de llaves, mezcladoras, inodoros y lavamanos.",
+            asset: {
+              filename: "griferia-sanitarios.jpg",
+              src: "/images/servicios/griferia-sanitarios.jpg",
+              desktopDimensions: "1200 × 1500 px",
+              mobileDimensions: "1600 × 1000 px",
+              alt: "Técnico de HomeService ajustando la grifería de un lavamanos en Quito",
+            },
+          },
+          {
+            id: 4,
+            title: "Cortocircuitos y cortes de luz",
+            description:
+              "Diagnóstico y reparación de fallas que dejan sin energía la casa o el local.",
+            asset: {
+              filename: "cortocircuitos.jpg",
+              src: "/images/servicios/cortocircuitos.jpg",
+              desktopDimensions: "1200 × 1500 px",
+              mobileDimensions: "1600 × 1000 px",
+              alt: "Técnico de HomeService revisando un cortocircuito en Quito",
+            },
+          },
+          {
+            id: 5,
+            title: "Tableros y breakers",
+            description:
+              "Instalación, cambio y orden de tableros, breakers y protecciones.",
+            asset: {
+              filename: "tableros-breakers.jpg",
+              src: "/images/servicios/tableros-breakers.jpg",
+              desktopDimensions: "1200 × 1500 px",
+              mobileDimensions: "1600 × 1000 px",
+              alt: "Técnico de HomeService revisando un tablero eléctrico en Quito",
+            },
+          },
+          {
+            id: 6,
+            title: "Puntos de luz y tomacorrientes",
+            description:
+              "Instalación y reparación de tomacorrientes, luminarias e interruptores.",
+            asset: {
+              filename: "puntos-tomacorrientes.jpg",
+              src: "/images/servicios/puntos-tomacorrientes.jpg",
+              desktopDimensions: "1200 × 1500 px",
+              mobileDimensions: "1600 × 1000 px",
+              alt: "Técnico de HomeService instalando un tomacorriente en Quito",
+            },
+          },
+        ],
+        groups: [
+          {
+            title: "Plomería",
+            itemIds: [1, 2, 3],
+            linkPrefix: "Ver servicio de",
+            linkLabel: "plomero en Quito",
+            href: "/plomero-quito",
+          },
+          {
+            title: "Electricidad",
+            itemIds: [4, 5, 6],
+            linkPrefix: "Ver servicio de",
+            linkLabel: "electricista en Quito",
+            href: "/electricista-quito",
+          },
+        ],
+        cta: {
+          label: "Solicitar servicio por WhatsApp",
+          href: whatsappHref(
+            "Hola HomeService, quisiera coordinar un servicio a domicilio. Mi sector es: ",
+          ),
+          ariaLabel: "Coordinar un servicio a domicilio por WhatsApp",
+          analytics: "cta_whatsapp_verticales_click",
+        },
+        schedule: HOURS.sentence,
+        assetSlot: {
+          pending: "Archivo pendiente",
+          desktop: "Desktop 4:5",
+          mobile: "Móvil 16:10",
+        },
+      },
+      steps: {
+        id: "como-funciona",
+        eyebrow: "CÓMO FUNCIONA",
+        titleBeforeHighlight: "Cómo pedir",
+        titleHighlight: "el servicio",
+        intro: "Tres pasos claros para coordinar la visita y decidir con la información completa.",
+        items: [
+          {
+            title: "Escribes por WhatsApp",
+            description: "Cuéntanos qué está pasando y en qué sector de Quito estás.",
+          },
+          {
+            title: "Coordinamos la visita",
+            description: "Agendamos al técnico dentro del horario de atención del mismo día o del siguiente.",
+          },
+          {
+            title: "El técnico revisa y explica",
+            description: "Revisa la instalación, te dice qué hay que hacer y cuánto cuesta antes de empezar.",
+          },
+        ],
+      },
+      reasons: {
+        eyebrow: "HOMESERVICE",
+        titleBeforeHighlight: "Por qué llamar a",
+        titleHighlight: "HomeService",
+        intro: "Claridad antes del trabajo y una explicación concreta de lo que necesita la instalación.",
+        items: [
+          { title: "Diagnóstico explicado", description: "Te decimos qué encontramos y por qué, en palabras simples." },
+          { title: "Costo conversado antes", description: "El precio se acuerda antes de empezar el trabajo. Sin cargos sorpresa al final." },
+          { title: "Herramienta profesional", description: "Sonda eléctrica, equipo de detección y equipo de presión según el caso." },
+          { title: "Materiales a la vista", description: "Los materiales se cotizan aparte y los apruebas tú antes de comprarlos." },
+          { title: "Atención los 7 días", description: "De lunes a domingo, de 7:30 a 19:30." },
+          { title: "Menor rotura posible", description: "Procuramos resolver sin romper; si hay que abrir, se te avisa antes." },
+        ],
+      },
+      coverage: {
+        id: "cobertura",
+        eyebrow: "COBERTURA",
+        titleBeforeHighlight: "Dónde",
+        titleHighlight: "atendemos",
+        intro: "Cubrimos Quito y los valles. Escríbenos con tu sector y te confirmamos la visita.",
+        sectors: ["Norte", "Centro", "Sur", "La Carolina", "El Condado", "Ponceano", "Carcelén", "Calderón", "Cumbayá", "Tumbaco", "Valle de los Chillos", "Sangolquí", "y sectores aledaños"],
+        structuredAreas: ["Quito", "Cumbayá", "Tumbaco", "Valle de los Chillos", "Rumiñahui"],
+        cta: {
+          label: "Confirmar cobertura por WhatsApp",
+          href: whatsappHref("Hola HomeService, quisiera confirmar si atienden en mi sector: "),
+          ariaLabel: "Confirmar la cobertura de HomeService por WhatsApp",
+          analytics: "cta_whatsapp_cobertura_home_click",
+        },
+      },
+      faq: {
+        id: "preguntas",
+        eyebrow: "PREGUNTAS",
+        title: "Preguntas frecuentes",
+        items: [
+          { question: "¿Qué servicios ofrece HomeService?", answer: "Plomería y electricidad a domicilio en Quito y sus valles. Cada servicio tiene su propia página con el detalle completo." },
+          { question: "¿Atienden los fines de semana?", answer: HOURS.sentence },
+          { question: "¿Cómo se pide el servicio?", answer: "Nos escribes por WhatsApp con tu sector y el problema, coordinamos la visita y el técnico te explica el trabajo y el costo antes de empezar." },
+          { question: "¿Trabajan en departamentos, oficinas y locales?", answer: "Sí, además de casas." },
+          { question: "¿Los materiales están incluidos?", answer: "Se cotizan aparte. Te los mostramos y los apruebas antes de la compra." },
+          { question: "¿A qué sectores de Quito llegan?", answer: "A Quito y los valles: norte, centro, sur, Cumbayá, Tumbaco y Los Chillos, entre otros. Escríbenos tu sector." },
+        ],
+        cta: {
+          label: "Consultar por WhatsApp",
+          href: whatsappHref("Hola HomeService, tengo una consulta sobre sus servicios a domicilio."),
+          ariaLabel: "Consultar sobre los servicios de HomeService por WhatsApp",
+          analytics: "cta_whatsapp_faq_home_click",
+        },
+      },
+      floatingCta: {
+        label: "WhatsApp",
+        href: whatsappHref("Hola HomeService, necesito coordinar un servicio en Quito. Mi sector es: "),
+        ariaLabel: "Solicitar un servicio de HomeService por WhatsApp",
+        analytics: "cta_whatsapp_flotante_click",
+      },
+    },
   },
   footer: {
-    servicesHeading: "Servicios",
     contactHeading: "Contacto",
-    futureVertical: "Electricidad — próximamente.",
+    columns: [
+      {
+        heading: "Plomería",
+        href: "/plomero-quito",
+        items: [
+          "Fugas de agua",
+          "Cañerías y desagües tapados",
+          "Grifería y sanitarios",
+          "Tuberías y conexiones",
+          "Bombas y presión de agua",
+          "Instalaciones y mantenimiento",
+        ],
+      },
+      {
+        heading: "Electricidad",
+        href: "/electricista-quito",
+        items: [
+          "Cortocircuitos y cortes de luz",
+          "Tableros y breakers",
+          "Puntos de luz y tomacorrientes",
+          "Revisión de cableado",
+          "Puesta a tierra y 110v–220v",
+          "Duchas, cocinas y calefones eléctricos",
+        ],
+      },
+    ],
     copyrightSuffix: "HomeService. Todos los derechos reservados.",
   },
   seo: {
@@ -369,6 +636,7 @@ type WidenContent<T> = T extends string
           : T
 
 export type PageContent = WidenContent<(typeof siteContent.verticals)["plomeria"]>
+export type HeaderContent = WidenContent<(typeof siteContent.headers)[keyof typeof siteContent.headers]>
 export type PlumbingContent = PageContent
 export type ServiceItem = PageContent["services"]["items"][number]
 

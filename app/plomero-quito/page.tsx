@@ -104,7 +104,7 @@ export default function PlumbingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
       />
-      <Header brand={siteContent.brand} content={siteContent.header} />
+      <Header brand={siteContent.brand} content={siteContent.headers.plomeria} />
       <Hero content={plumbing.hero} imagery={siteContent.imagery} />
       <Philosophy content={plumbing.steps} image={siteContent.imagery.steps} />
       <Projects content={services} />
@@ -116,7 +116,6 @@ export default function PlumbingPage() {
         brand={siteContent.brand}
         contact={siteContent.contact}
         content={siteContent.footer}
-        services={plumbing.services.items}
       />
       <FloatingCTA content={plumbing.floatingCta} />
     </main>

@@ -1,14 +1,13 @@
 "use client"
 
-import type React from "react"
-import type { SiteContent } from "@/lib/site-content"
+import type { HeaderContent, SiteContent } from "@/lib/site-content"
 
 import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 
 type HeaderProps = {
   brand: SiteContent["brand"]
-  content: SiteContent["header"]
+  content: HeaderContent
 }
 
 export function Header({ brand, content }: HeaderProps) {
@@ -23,11 +22,6 @@ export function Header({ brand, content }: HeaderProps) {
 
   const closeMobileMenu = () => setMobileMenuOpen(false)
 
-  const scrollToTop = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault()
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
   return (
     <header
       className={cn(
@@ -39,10 +33,9 @@ export function Header({ brand, content }: HeaderProps) {
     >
       <nav className="container mx-auto px-6 flex items-center justify-between md:px-[24]" aria-label={brand.name}>
         <a
-          href="#hero"
+          href="/"
           className="flex items-center gap-2 text-xl font-medium tracking-tight text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           aria-label={brand.homeAriaLabel}
-          onClick={scrollToTop}
         >
           {brand.name}
         </a>

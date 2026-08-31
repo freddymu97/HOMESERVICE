@@ -7,7 +7,9 @@ import Image from "next/image"
 import { ArrowDown } from "lucide-react"
 
 type HeroProps = {
-  content: PageContent["hero"]
+  content: Omit<PageContent["hero"], "breadcrumb"> & {
+    breadcrumb?: PageContent["hero"]["breadcrumb"] | null
+  }
   imagery: SiteContent["imagery"]
 }
 
@@ -140,7 +142,11 @@ export function Hero({ content, imagery }: HeroProps) {
             {content.title}
           </h1>
           <p className="mx-auto max-w-3xl text-sm leading-relaxed text-white/90 md:text-lg">
-            {content.subtitleMobile} <span className="hidden md:inline">{content.subtitleDesktopEnd}</span>.
+            {content.subtitleMobile}
+            {content.subtitleDesktopEnd ? (
+              <> <span className="hidden md:inline">{content.subtitleDesktopEnd}</span></>
+            ) : null}
+            .
           </p>
 
           <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">

@@ -1,29 +1,36 @@
-import type { PageContent, SiteContent } from "@/lib/site-content"
+import type { SiteContent } from "@/lib/site-content"
 
 type FooterProps = {
   brand: SiteContent["brand"]
   contact: SiteContent["contact"]
   content: SiteContent["footer"]
-  services: PageContent["services"]["items"]
 }
 
-export function Footer({ brand, contact, content, services }: FooterProps) {
+export function Footer({ brand, contact, content }: FooterProps) {
   return (
     <footer className="py-16 md:py-24 border-t border-border">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
-          <div className="md:col-span-2">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          <div>
             <p className="mb-6 text-xl font-medium tracking-tight text-foreground">{brand.name}</p>
             <p className="text-muted-foreground leading-relaxed max-w-sm">{brand.footerLine}</p>
-            <p className="mt-6 text-sm text-muted-foreground">{content.futureVertical}</p>
           </div>
 
-          <div>
-            <h2 className="text-sm font-medium mb-4">{content.servicesHeading}</h2>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              {services.map((service) => <li key={service.title}>{service.title}</li>)}
-            </ul>
-          </div>
+          {content.columns.map((column) => (
+            <div key={column.heading}>
+              <h2 className="text-sm font-medium mb-4">
+                <a
+                  href={column.href}
+                  className="hover:text-muted-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+                >
+                  {column.heading}
+                </a>
+              </h2>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                {column.items.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </div>
+          ))}
 
           <div>
             <h2 className="text-sm font-medium mb-4">{content.contactHeading}</h2>

@@ -20,6 +20,13 @@ type ServicesContent = Omit<PageContent["services"], "items"> & {
       available: boolean
     }
   }>
+  groups?: ReadonlyArray<{
+    title: string
+    itemIds: ReadonlyArray<number>
+    linkPrefix: string
+    linkLabel: string
+    href: string
+  }>
 }
 
 export function Projects({ content }: { content: ServicesContent }) {
@@ -49,6 +56,54 @@ export function Projects({ content }: { content: ServicesContent }) {
     return () => observer.disconnect()
   }, [content.items])
 
+  const renderService = (service: ServicesContent["items"][number]) => {
+    const index = content.items.findIndex((item) => item.id === service.id)
+
+    return (
+      <article
+        key={service.id}
+        className="group"
+        onMouseEnter={() => setHoveredId(service.id)}
+        onMouseLeave={() => setHoveredId(null)}
+      >
+        <div
+          ref={(element) => {
+            imageRefs.current[index] = element
+          }}
+          className="relative overflow-hidden aspect-[16/10] md:aspect-[4/5] mb-6"
+        >
+          <AssetSlot
+            asset={service.asset}
+            available={service.asset.available}
+            labels={content.assetSlot}
+            imageClassName={`object-cover transition-transform duration-700 ${
+              hoveredId === service.id ? "scale-105" : "scale-100"
+            }`}
+          />
+          <div
+            className="reveal-cover absolute inset-0 bg-primary origin-top pointer-events-none"
+            style={{
+              transform: revealedImages.has(service.id) ? "scaleY(0)" : "scaleY(1)",
+              transition: "transform 1.5s cubic-bezier(0.76, 0, 0.24, 1)",
+            }}
+          />
+        </div>
+
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            {content.groups ? (
+              <h4 className="text-xl font-medium mb-2">{service.title}</h4>
+            ) : (
+              <h3 className="text-xl font-medium mb-2">{service.title}</h3>
+            )}
+            <p className="text-muted-foreground text-sm">{service.description}</p>
+          </div>
+          <span className="text-muted-foreground/60 text-sm">0{service.id}</span>
+        </div>
+      </article>
+    )
+  }
+
   return (
     <section id={content.id} className="py-32 md:py-29 bg-secondary/50">
       <div className="container mx-auto px-6 md:px-12">
@@ -71,47 +126,30 @@ export function Projects({ content }: { content: ServicesContent }) {
           </a>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          {content.items.map((service, index) => (
-            <article
-              key={service.id}
-              className="group"
-              onMouseEnter={() => setHoveredId(service.id)}
-              onMouseLeave={() => setHoveredId(null)}
-            >
-              <div
-                ref={(element) => {
-                  imageRefs.current[index] = element
-                }}
-                className="relative overflow-hidden aspect-[16/10] md:aspect-[4/5] mb-6"
-              >
-                <AssetSlot
-                  asset={service.asset}
-                  available={service.asset.available}
-                  labels={content.assetSlot}
-                  imageClassName={`object-cover transition-transform duration-700 ${
-                    hoveredId === service.id ? "scale-105" : "scale-100"
-                  }`}
-                />
-                <div
-                  className="reveal-cover absolute inset-0 bg-primary origin-top pointer-events-none"
-                  style={{
-                    transform: revealedImages.has(service.id) ? "scaleY(0)" : "scaleY(1)",
-                    transition: "transform 1.5s cubic-bezier(0.76, 0, 0.24, 1)",
-                  }}
-                />
-              </div>
-
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-medium mb-2">{service.title}</h3>
-                  <p className="text-muted-foreground text-sm">{service.description}</p>
+        {content.groups ? (
+          <div className="space-y-20">
+            {content.groups.map((group) => (
+              <div key={group.title}>
+                <h3 className="mb-8 text-2xl font-medium tracking-tight">{group.title}</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                  {content.items.filter((service) => group.itemIds.includes(service.id)).map(renderService)}
                 </div>
-                <span className="text-muted-foreground/60 text-sm">0{service.id}</span>
+                <p className="mt-8 text-sm text-muted-foreground">
+                  {group.linkPrefix}{" "}
+                  <a
+                    href={group.href}
+                    className="text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors duration-300 hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+                  >
+                    {group.linkLabel}
+                  </a>
+                  .
+                </p>
               </div>
-            </article>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">{content.items.map(renderService)}</div>
+        )}
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border pt-8 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">{content.schedule}</p>
