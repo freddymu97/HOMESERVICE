@@ -118,6 +118,22 @@ export function Hero({ content, imagery }: HeroProps) {
         <Image src={imagery.heroBackground.src} alt={imagery.heroBackground.alt} fill sizes="100vw" priority className="object-cover object-center" />
       </div>
 
+      {content.breadcrumb ? (
+        <nav
+          aria-label="Migas de pan"
+          className="absolute left-6 top-20 z-30 bg-black/35 px-3 py-2 text-xs tracking-[0.18em] text-white/85 backdrop-blur-sm md:left-12 md:text-sm"
+        >
+          <a
+            href={content.breadcrumb.homeHref}
+            className="transition-colors duration-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          >
+            {content.breadcrumb.homeLabel}
+          </a>{" "}
+          <span aria-hidden="true">›</span>{" "}
+          <span aria-current="page">{content.breadcrumb.currentLabel}</span>
+        </nav>
+      ) : null}
+
       <div
         ref={contentRef}
         className="hero-scroll-content container mx-auto px-6 md:px-12 lg:pt-0 relative z-10 pb-0 pl-1 pr-1 pt-8 md:pt-0"
@@ -125,18 +141,6 @@ export function Hero({ content, imagery }: HeroProps) {
         data-animation-progress={animationProgress}
       >
         <div className="mb-72 md:mb-60 lg:mb-80 text-center">
-          {content.breadcrumb ? (
-            <nav aria-label="Migas de pan" className="mb-4 text-xs tracking-[0.22em] text-white/75 md:text-sm">
-              <a
-                href={content.breadcrumb.homeHref}
-                className="transition-colors duration-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-              >
-                {content.breadcrumb.homeLabel}
-              </a>{" "}
-              <span aria-hidden="true">›</span>{" "}
-              <span aria-current="page">{content.breadcrumb.currentLabel}</span>
-            </nav>
-          ) : null}
           <p className="text-xs md:text-sm tracking-[0.22em] md:tracking-[0.3em] uppercase text-secondary mb-4">{content.eyebrow}</p>
           <h1 ref={titleRef} className="text-5xl sm:text-6xl md:text-7xl font-medium text-balance text-center text-white mb-5 tracking-tight leading-[0.95] lg:text-8xl">
             {content.title}
