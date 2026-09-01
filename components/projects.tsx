@@ -1,44 +1,40 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import type { PageContent } from "@/lib/site-content"
+
+import { useEffect, useRef, useState } from "react"
 import { ArrowUpRight } from "lucide-react"
+import { AssetSlot } from "@/components/asset-slot"
+import { ChipList } from "@/components/chip-list"
 
-const projects = [
-  {
-    id: 1,
-    title: "Villa Serena",
-    category: "Residential",
-    location: "Malibu, California",
-    year: "2024",
-    image: "/images/hously-1.png", // Updated path to /images/ subdirectory
-  },
-  {
-    id: 2,
-    title: "The Glass Pavilion",
-    category: "Commercial",
-    location: "Tokyo, Japan",
-    year: "2023",
-    image: "/images/hously-2.png", // Updated path to /images/ subdirectory
-  },
-  {
-    id: 3,
-    title: "Casa Terra",
-    category: "Residential",
-    location: "Lisbon, Portugal",
-    year: "2023",
-    image: "/images/hously-3.png", // Updated path to /images/ subdirectory
-  },
-  {
-    id: 4,
-    title: "Nordic Retreat",
-    category: "Hospitality",
-    location: "Oslo, Norway",
-    year: "2024",
-    image: "/images/hously-4.png", // Updated path to /images/ subdirectory
-  },
-]
+type ServicesContent = Omit<PageContent["services"], "items"> & {
+  items: ReadonlyArray<{
+    id: number
+    title: string
+    description: string
+    asset: {
+      filename: string
+      src: string
+      desktopDimensions: string
+      mobileDimensions: string
+      alt: string
+      available: boolean
+    }
+  }>
+  groups?: ReadonlyArray<{
+    title: string
+    itemIds: ReadonlyArray<number>
+    linkPrefix: string
+    linkLabel: string
+    href: string
+  }>
+  additionalServices?: {
+    label: string
+    items: ReadonlyArray<string>
+  }
+}
 
-export function Projects() {
+export function Projects({ content }: { content: ServicesContent }) {
   const [hoveredId, setHoveredId] = useState<number | null>(null)
   const [revealedImages, setRevealedImages] = useState<Set<number>>(new Set())
   const imageRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -50,7 +46,7 @@ export function Projects() {
           if (entry.isIntersecting) {
             const index = imageRefs.current.indexOf(entry.target as HTMLDivElement)
             if (index !== -1) {
-              setRevealedImages((prev) => new Set(prev).add(projects[index].id))
+              setRevealedImages((previous) => new Set(previous).add(content.items[index].id))
             }
           }
         })
@@ -58,66 +54,127 @@ export function Projects() {
       { threshold: 0.2 },
     )
 
-    imageRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref)
+    imageRefs.current.forEach((reference) => {
+      if (reference) observer.observe(reference)
     })
 
     return () => observer.disconnect()
-  }, [])
+  }, [content.items])
+
+  const renderService = (service: ServicesContent["items"][number]) => {
+    const index = content.items.findIndex((item) => item.id === service.id)
+
+    return (
+      <article
+        key={service.id}
+        className="group"
+        onMouseEnter={() => setHoveredId(service.id)}
+        onMouseLeave={() => setHoveredId(null)}
+      >
+        <div
+          ref={(element) => {
+            imageRefs.current[index] = element
+          }}
+          className="relative overflow-hidden aspect-[16/10] md:aspect-[4/5] mb-6"
+        >
+          <AssetSlot
+            asset={service.asset}
+            available={service.asset.available}
+            labels={content.assetSlot}
+            imageClassName={`object-cover transition-transform duration-700 ${
+              hoveredId === service.id ? "scale-105" : "scale-100"
+            }`}
+          />
+          <div
+            className="reveal-cover absolute inset-0 bg-primary origin-top pointer-events-none"
+            style={{
+              transform: revealedImages.has(service.id) ? "scaleY(0)" : "scaleY(1)",
+              transition: "transform 1.5s cubic-bezier(0.76, 0, 0.24, 1)",
+            }}
+          />
+        </div>
+
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            {content.groups ? (
+              <h4 className="text-xl font-medium mb-2">{service.title}</h4>
+            ) : (
+              <h3 className="text-xl font-medium mb-2">{service.title}</h3>
+            )}
+            <p className="text-muted-foreground text-sm">{service.description}</p>
+          </div>
+          <span className="text-muted-foreground/60 text-sm">0{service.id}</span>
+        </div>
+      </article>
+    )
+  }
 
   return (
-    <section id="projects" className="py-32 md:py-29 bg-secondary/50">
+    <section id={content.id} className="py-32 md:py-29 bg-secondary/50">
       <div className="container mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <div>
-            <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-6">Selected Works</p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">Featured Projects</h2>
+          <div className="max-w-3xl">
+            <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-6">{content.eyebrow}</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">{content.title}</h2>
+            <p className="mt-6 text-muted-foreground text-lg leading-relaxed">{content.intro}</p>
           </div>
           <a
-            href="#"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+            href={content.cta.href}
+            target="_blank"
+            rel="noopener"
+            aria-label={content.cta.ariaLabel}
+            data-analytics={content.cta.analytics}
+            className="inline-flex items-center gap-2 whitespace-nowrap text-sm text-muted-foreground hover:text-foreground transition-colors group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
           >
-            View all projects
-            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            {content.cta.label}
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
           </a>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          {projects.map((project, index) => (
-            <article
-              key={project.id}
-              className="group cursor-pointer"
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
-            >
-              <div ref={(el) => (imageRefs.current[index] = el)} className="relative overflow-hidden aspect-[4/3] mb-6">
-                <img
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  className={`w-full h-full object-cover transition-transform duration-700 ${
-                    hoveredId === project.id ? "scale-105" : "scale-100"
-                  }`}
-                />
-                <div
-                  className="absolute inset-0 bg-primary origin-top"
-                  style={{
-                    transform: revealedImages.has(project.id) ? "scaleY(0)" : "scaleY(1)",
-                    transition: "transform 1.5s cubic-bezier(0.76, 0, 0.24, 1)", // Increased duration from 0.6s to 1.5s for slower reveal
-                  }}
-                />
-              </div>
-
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-medium mb-2 group-hover:underline underline-offset-4">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm">
-                    {project.category} · {project.location}
-                  </p>
+        {content.groups ? (
+          <div className="space-y-20">
+            {content.groups.map((group) => (
+              <div key={group.title}>
+                <h3 className="mb-8 text-2xl font-medium tracking-tight">{group.title}</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                  {content.items.filter((service) => group.itemIds.includes(service.id)).map(renderService)}
                 </div>
-                <span className="text-muted-foreground/60 text-sm">{project.year}</span>
+                <p className="mt-8 text-sm text-muted-foreground">
+                  {group.linkPrefix}{" "}
+                  <a
+                    href={group.href}
+                    className="text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors duration-300 hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+                  >
+                    {group.linkLabel}
+                  </a>
+                  .
+                </p>
               </div>
-            </article>
-          ))}
+            ))}
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">{content.items.map(renderService)}</div>
+        )}
+
+        {content.additionalServices ? (
+          <div className="mt-12 border-t border-border pt-8">
+            <h3 className="mb-5 text-sm font-medium">{content.additionalServices.label}</h3>
+            <ChipList items={content.additionalServices.items} />
+          </div>
+        ) : null}
+
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border pt-8 sm:flex-row sm:items-center">
+          <p className="text-sm text-muted-foreground">{content.schedule}</p>
+          <a
+            href={content.cta.href}
+            target="_blank"
+            rel="noopener"
+            aria-label={content.cta.ariaLabel}
+            data-analytics={content.cta.analytics}
+            className="inline-flex items-center justify-center whitespace-nowrap bg-foreground px-6 py-3 text-sm text-primary-foreground transition-colors duration-300 hover:bg-foreground/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+          >
+            {content.cta.label}
+          </a>
         </div>
       </div>
     </section>

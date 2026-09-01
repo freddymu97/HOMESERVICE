@@ -1,31 +1,17 @@
 "use client"
 
+import type { PageContent, SiteContent } from "@/lib/site-content"
+
 import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
 import { HighlightedText } from "./highlighted-text"
 
-const philosophyItems = [
-  {
-    title: "Minimal, not empty",
-    description:
-      "Every element has purpose and space to breathe. We remove the unnecessary to reveal what truly matters.",
-  },
-  {
-    title: "Architecture-led design",
-    description:
-      "Layouts inspired by structure, rhythm, and materiality. Buildings that speak through proportion and light.",
-  },
-  {
-    title: "Subtle motion",
-    description:
-      "Motion supports the experience, never distracts. Movement that feels natural, like light shifting through a room.",
-  },
-  {
-    title: "Timeless aesthetic",
-    description: "Elegant, calm, and enduring visual language. Designs that transcend trends and age with grace.",
-  },
-]
+type PhilosophyProps = {
+  content: PageContent["steps"]
+  image: SiteContent["imagery"]["steps"]
+}
 
-export function Philosophy() {
+export function Philosophy({ content, image }: PhilosophyProps) {
   const [visibleItems, setVisibleItems] = useState<number[]>([])
   const itemRefs = useRef<(HTMLDivElement | null)[]>([])
 
@@ -34,58 +20,47 @@ export function Philosophy() {
       (entries) => {
         entries.forEach((entry) => {
           const index = Number(entry.target.getAttribute("data-index"))
-          if (entry.isIntersecting) {
-            setVisibleItems((prev) => [...new Set([...prev, index])])
-          }
+          if (entry.isIntersecting) setVisibleItems((previous) => [...new Set([...previous, index])])
         })
       },
       { threshold: 0.3 },
     )
 
-    itemRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref)
+    itemRefs.current.forEach((reference) => {
+      if (reference) observer.observe(reference)
     })
 
     return () => observer.disconnect()
   }, [])
 
   return (
-    <section id="about" className="py-32 md:py-29">
+    <section id={content.id} className="py-32 md:py-29">
       <div className="container mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          {/* Left column - Title and image */}
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-6">Our Philosophy</p>
+            <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-6">{content.eyebrow}</p>
             <h2 className="text-6xl md:text-6xl font-medium leading-[1.15] tracking-tight mb-6 text-balance lg:text-8xl">
-              Design with
+              {content.titleBeforeHighlight}
               <br />
-              <HighlightedText>intention</HighlightedText>
+              <HighlightedText>{content.titleHighlight}</HighlightedText>
             </h2>
 
             <div className="relative hidden lg:block">
-              <img
-                src="/images/exterior.png"
-                alt="Architectural sketch of home office workspace"
-                className="opacity-90 relative z-10 w-auto"
-              />
+              <Image src={image.src} alt={image.alt} width={1696} height={1928} sizes="50vw" loading="lazy" className="opacity-90 relative z-10 w-auto" />
             </div>
           </div>
 
-          {/* Right column - Description and Philosophy items */}
           <div className="space-y-6 lg:pt-48">
-            <p className="text-muted-foreground text-lg leading-relaxed max-w-md mb-12">
-              Architecture is more than structure — it's how we experience the world. We create spaces that nurture the
-              human spirit.
-            </p>
+            <p className="text-muted-foreground text-lg leading-relaxed max-w-md mb-12">{content.intro}</p>
 
-            {philosophyItems.map((item, index) => (
+            {content.items.map((item, index) => (
               <div
                 key={item.title}
-                ref={(el) => {
-                  itemRefs.current[index] = el
+                ref={(element) => {
+                  itemRefs.current[index] = element
                 }}
                 data-index={index}
-                className={`transition-all duration-700 ${
+                className={`reveal-item transition-all duration-700 ${
                   visibleItems.includes(index) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
