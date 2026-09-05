@@ -45,7 +45,11 @@ export default function PlumbingPage() {
     ...plumbing.services,
     items: plumbing.services.items.map((service) => ({
       ...service,
-      asset: { ...service.asset, available: publicAssetExists(service.asset.src) },
+      asset: {
+        ...service.asset,
+        available:
+          publicAssetExists(service.asset.src) && publicAssetExists(service.asset.mobileSrc),
+      },
     })),
   }
   const structuredData = {

@@ -40,7 +40,11 @@ export default function Home() {
     ...home.services,
     items: home.services.items.map((service) => ({
       ...service,
-      asset: { ...service.asset, available: publicAssetExists(service.asset.src) },
+      asset: {
+        ...service.asset,
+        available:
+          publicAssetExists(service.asset.src) && publicAssetExists(service.asset.mobileSrc),
+      },
     })),
   }
   const structuredData = {

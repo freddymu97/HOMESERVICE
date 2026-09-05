@@ -45,7 +45,11 @@ export default function ElectricityPage() {
     ...electricity.services,
     items: electricity.services.items.map((service) => ({
       ...service,
-      asset: { ...service.asset, available: publicAssetExists(service.asset.src) },
+      asset: {
+        ...service.asset,
+        available:
+          publicAssetExists(service.asset.src) && publicAssetExists(service.asset.mobileSrc),
+      },
     })),
   }
   const structuredData = {
