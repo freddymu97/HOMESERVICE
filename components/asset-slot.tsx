@@ -45,7 +45,11 @@ export function AssetSlot({ asset, available, labels, imageClassName }: AssetSlo
 
     return (
       <picture>
-        <source media="(max-width: 767px)" srcSet={mobileImage.srcSet} sizes="100vw" />
+        <source
+          media="(max-width: 767px)"
+          srcSet={mobileImage.srcSet ?? asset.mobileSrc}
+          sizes="100vw"
+        />
         <img
           {...desktopImage}
           alt={asset.alt}
