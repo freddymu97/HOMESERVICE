@@ -1,9 +1,13 @@
-import Image from "next/image"
+import { getImageProps } from "next/image"
+
+import { cn } from "@/lib/utils"
 
 type AssetSlotProps = {
   asset: {
     filename: string
     src: string
+    mobileFilename: string
+    mobileSrc: string
     desktopDimensions: string
     mobileDimensions: string
     alt: string
@@ -19,15 +23,39 @@ type AssetSlotProps = {
 
 export function AssetSlot({ asset, available, labels, imageClassName }: AssetSlotProps) {
   if (available) {
+    const common = {
+      alt: asset.alt,
+      loading: "lazy" as const,
+      quality: 85,
+    }
+    const { props: desktopImage } = getImageProps({
+      ...common,
+      src: asset.src,
+      width: 1200,
+      height: 1500,
+      sizes: "(min-width: 768px) 50vw, 100vw",
+    })
+    const { props: mobileImage } = getImageProps({
+      ...common,
+      src: asset.mobileSrc,
+      width: 1600,
+      height: 1000,
+      sizes: "100vw",
+    })
+
     return (
-      <Image
-        src={asset.src}
-        alt={asset.alt}
-        fill
-        sizes="(max-width: 767px) 100vw, 50vw"
-        loading="lazy"
-        className={imageClassName}
-      />
+      <picture>
+        <source
+          media="(max-width: 767px)"
+          srcSet={mobileImage.srcSet ?? asset.mobileSrc}
+          sizes="100vw"
+        />
+        <img
+          {...desktopImage}
+          alt={asset.alt}
+          className={cn("absolute inset-0 h-full w-full object-cover", imageClassName)}
+        />
+      </picture>
     )
   }
 
@@ -35,7 +63,7 @@ export function AssetSlot({ asset, available, labels, imageClassName }: AssetSlo
     <div
       className="absolute inset-0 flex flex-col items-center justify-center border border-dashed border-foreground/25 bg-muted px-5 text-center text-foreground/70"
       role="img"
-      aria-label={`${labels.pending}: ${asset.filename}`}
+      aria-label={`${labels.pending}: ${asset.filename} / ${asset.mobileFilename}`}
     >
       <span className="text-xs uppercase tracking-[0.25em]">{labels.pending}</span>
       <span className="mt-3 text-sm font-medium text-foreground">{asset.filename}</span>
@@ -43,7 +71,7 @@ export function AssetSlot({ asset, available, labels, imageClassName }: AssetSlo
         {labels.desktop}: {asset.desktopDimensions}
       </span>
       <span className="text-xs">
-        {labels.mobile}: {asset.mobileDimensions}
+        {labels.mobile}: {asset.mobileFilename} · {asset.mobileDimensions}
       </span>
     </div>
   )

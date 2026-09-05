@@ -15,6 +15,8 @@ type ServicesContent = Omit<PageContent["services"], "items"> & {
     asset: {
       filename: string
       src: string
+      mobileFilename: string
+      mobileSrc: string
       desktopDimensions: string
       mobileDimensions: string
       alt: string

@@ -17,6 +17,20 @@ export const HOURS = {
 const whatsappHref = (message: string) =>
   `https://wa.me/${PHONE_WA}?text=${encodeURIComponent(message)}`
 
+const responsiveServiceAsset = (
+  desktopFilename: string,
+  mobileFilename: string,
+  alt: string,
+) => ({
+  filename: desktopFilename,
+  src: `/images/${desktopFilename}`,
+  mobileFilename,
+  mobileSrc: `/images/${mobileFilename}`,
+  desktopDimensions: "1200 × 1500 px",
+  mobileDimensions: "1600 × 1000 px",
+  alt,
+})
+
 export const siteContent = {
   brand: {
     name: "HomeService",
@@ -151,78 +165,66 @@ export const siteContent = {
             id: 1,
             title: "Fugas de agua",
             description: "Ubicación y reparación de fugas en tuberías, paredes, pisos y cisternas.",
-            asset: {
-              filename: "fugas-de-agua.jpg",
-              src: "/images/servicios/fugas-de-agua.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService reparando una fuga de agua en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "fugas-de-agua-desktop.jpg",
+              "fugas-de-agua-movil.jpg",
+              "Técnico de HomeService reparando una fuga de agua en Quito",
+            ),
             // slug: "fugas-de-agua",
           },
           {
             id: 2,
             title: "Cañerías y desagües tapados",
             description: "Destape de inodoros, fregaderos, duchas, sifones y cajas de revisión.",
-            asset: {
-              filename: "destape-desagues.jpg",
-              src: "/images/servicios/destape-desagues.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService destapando un desagüe en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "destape-desagues-movil.png",
+              "destape-desagues-desktop.png",
+              "Técnico de HomeService destapando un desagüe en Quito",
+            ),
             // slug: "destape-desagues",
           },
           {
             id: 3,
             title: "Grifería y sanitarios",
             description: "Cambio y reparación de llaves, mezcladoras, inodoros y lavamanos.",
-            asset: {
-              filename: "griferia-sanitarios.jpg",
-              src: "/images/servicios/griferia-sanitarios.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService ajustando la grifería de un lavamanos en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "griferia-sanitarios-movil.png",
+              "griferia-sanitarios-desktop.jpg",
+              "Técnico de HomeService ajustando la grifería de un lavamanos en Quito",
+            ),
             // slug: "griferia-sanitarios",
           },
           {
             id: 4,
             title: "Tuberías y conexiones",
             description: "Reparación o cambio de tramos de tubería de agua potable y desagüe.",
-            asset: {
-              filename: "tuberias-conexiones.jpg",
-              src: "/images/servicios/tuberias-conexiones.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService revisando conexiones de tubería en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "tuberias-conexiones-desktop.jpg",
+              "tuberias-conexiones-movil.jpg",
+              "Técnico de HomeService revisando conexiones de tubería en Quito",
+            ),
             // slug: "tuberias-conexiones",
           },
           {
             id: 5,
             title: "Bombas y presión de agua",
             description: "Revisión de bombas, cisternas, tanques y problemas de baja presión.",
-            asset: {
-              filename: "bombas-presion.jpg",
-              src: "/images/servicios/bombas-presion.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService revisando una bomba de agua en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "bombas-presion-desktop.jpg",
+              "bombas-presion-movil.jpg",
+              "Técnico de HomeService revisando una bomba de agua en Quito",
+            ),
             // slug: "bombas-presion",
           },
           {
             id: 6,
             title: "Instalaciones y mantenimiento",
             description: "Puntos de agua para lavadora, calentador y mantenimiento preventivo.",
-            asset: {
-              filename: "instalaciones-mantenimiento.jpg",
-              src: "/images/servicios/instalaciones-mantenimiento.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService instalando un punto de agua en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "instalaciones-mantenimiento-desktop.jpg",
+              "instalaciones-mantenimiento-movil.jpg",
+              "Técnico de HomeService instalando un punto de agua en Quito",
+            ),
             // slug: "instalaciones-mantenimiento",
           },
         ],
@@ -418,76 +420,64 @@ export const siteContent = {
             id: 1,
             title: "Fugas de agua",
             description: "Ubicación y reparación de fugas en tuberías, paredes y pisos.",
-            asset: {
-              filename: "fugas-de-agua.jpg",
-              src: "/images/servicios/fugas-de-agua.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService reparando una fuga de agua en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "fugas-de-agua-desktop.jpg",
+              "fugas-de-agua-movil.jpg",
+              "Técnico de HomeService reparando una fuga de agua en Quito",
+            ),
           },
           {
             id: 2,
             title: "Cañerías y desagües tapados",
             description: "Destape de inodoros, fregaderos, duchas y cajas de revisión.",
-            asset: {
-              filename: "destape-desagues.jpg",
-              src: "/images/servicios/destape-desagues.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService destapando un desagüe en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "destape-desagues-movil.png",
+              "destape-desagues-desktop.png",
+              "Técnico de HomeService destapando un desagüe en Quito",
+            ),
           },
           {
             id: 3,
             title: "Grifería y sanitarios",
             description: "Cambio y reparación de llaves, mezcladoras, inodoros y lavamanos.",
-            asset: {
-              filename: "griferia-sanitarios.jpg",
-              src: "/images/servicios/griferia-sanitarios.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService ajustando la grifería de un lavamanos en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "griferia-sanitarios-movil.png",
+              "griferia-sanitarios-desktop.jpg",
+              "Técnico de HomeService ajustando la grifería de un lavamanos en Quito",
+            ),
           },
           {
             id: 4,
             title: "Cortocircuitos y cortes de luz",
             description:
               "Diagnóstico y reparación de fallas que dejan sin energía la casa o el local.",
-            asset: {
-              filename: "cortocircuitos.jpg",
-              src: "/images/servicios/cortocircuitos.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService revisando un cortocircuito en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "cortocircuitos-desktop.jpg",
+              "cortocircuitos-movil.jpg",
+              "Técnico de HomeService revisando un cortocircuito en Quito",
+            ),
           },
           {
             id: 5,
             title: "Tableros y breakers",
             description:
               "Instalación, cambio y orden de tableros, breakers y protecciones.",
-            asset: {
-              filename: "tableros-breakers.jpg",
-              src: "/images/servicios/tableros-breakers.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService revisando un tablero eléctrico en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "tableros-breakers-desktop.jpg",
+              "tableros-breakers-movil.jpg",
+              "Técnico de HomeService revisando un tablero eléctrico en Quito",
+            ),
           },
           {
             id: 6,
             title: "Puntos de luz y tomacorrientes",
             description:
               "Instalación y reparación de tomacorrientes, luminarias e interruptores.",
-            asset: {
-              filename: "puntos-tomacorrientes.jpg",
-              src: "/images/servicios/puntos-tomacorrientes.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService instalando un tomacorriente en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "puntos-tomacorrientes-desktop.jpg",
+              "puntos-tomacorrientes-movil.jpg",
+              "Técnico de HomeService instalando un tomacorriente en Quito",
+            ),
           },
         ],
         groups: [
@@ -647,73 +637,61 @@ export const siteContent = {
             id: 1,
             title: "Cortocircuitos y cortes de luz",
             description: "Diagnóstico y reparación de fallas que dejan sin energía la casa o el local.",
-            asset: {
-              filename: "cortocircuitos.jpg",
-              src: "/images/servicios/cortocircuitos.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService diagnosticando un cortocircuito en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "cortocircuitos-desktop.jpg",
+              "cortocircuitos-movil.jpg",
+              "Técnico de HomeService diagnosticando un cortocircuito en Quito",
+            ),
           },
           {
             id: 2,
             title: "Tableros y breakers",
             description: "Instalación, cambio y ordenamiento de tableros, breakers y protecciones.",
-            asset: {
-              filename: "tableros-breakers.jpg",
-              src: "/images/servicios/tableros-breakers.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService revisando un tablero eléctrico en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "tableros-breakers-desktop.jpg",
+              "tableros-breakers-movil.jpg",
+              "Técnico de HomeService revisando un tablero eléctrico en Quito",
+            ),
           },
           {
             id: 3,
             title: "Puntos de luz y tomacorrientes",
             description: "Instalación y reparación de tomacorrientes, interruptores y luminarias.",
-            asset: {
-              filename: "puntos-tomacorrientes.jpg",
-              src: "/images/servicios/puntos-tomacorrientes.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService instalando un tomacorriente en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "puntos-tomacorrientes-desktop.jpg",
+              "puntos-tomacorrientes-movil.jpg",
+              "Técnico de HomeService instalando un tomacorriente en Quito",
+            ),
           },
           {
             id: 4,
             title: "Revisión de cableado",
             description: "Revisión de cableado, conexiones flojas y puntos recalentados.",
-            asset: {
-              filename: "revision-cableado.jpg",
-              src: "/images/servicios/revision-cableado.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService revisando cableado eléctrico en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "revision-cableado-desktop.jpg",
+              "revision-cableado-movil.jpg",
+              "Técnico de HomeService revisando cableado eléctrico en Quito",
+            ),
           },
           {
             id: 5,
             title: "Puesta a tierra y 110v–220v",
             description: "Puesta a tierra y adecuación de 110v a 220v para equipos de mayor consumo.",
-            asset: {
-              filename: "puesta-a-tierra.jpg",
-              src: "/images/servicios/puesta-a-tierra.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService verificando una puesta a tierra en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "puesta-a-tierra-desktop.jpg",
+              "puesta-a-tierra-movil.jpg",
+              "Técnico de HomeService verificando una puesta a tierra en Quito",
+            ),
           },
           {
             id: 6,
             title: "Duchas, cocinas de inducción y calefones eléctricos",
             description: "Conexión eléctrica de duchas, cocinas de inducción y calefones eléctricos.",
-            asset: {
-              filename: "instalaciones-electricas.jpg",
-              src: "/images/servicios/instalaciones-electricas.jpg",
-              desktopDimensions: "1200 × 1500 px",
-              mobileDimensions: "1600 × 1000 px",
-              alt: "Técnico de HomeService realizando una conexión eléctrica en Quito",
-            },
+            asset: responsiveServiceAsset(
+              "instalaciones-electricas-desktop.jpg",
+              "instalaciones-electricas-movil.jpg",
+              "Técnico de HomeService realizando una conexión eléctrica en Quito",
+            ),
           },
         ],
         additionalServices: {

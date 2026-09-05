@@ -3,6 +3,7 @@
 import type { HeaderContent, SiteContent } from "@/lib/site-content"
 
 import { useEffect, useState } from "react"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 type HeaderProps = {
@@ -34,10 +35,18 @@ export function Header({ brand, content }: HeaderProps) {
       <nav className="container mx-auto px-6 flex items-center justify-between md:px-[24]" aria-label={brand.name}>
         <a
           href="/"
-          className="flex items-center gap-2 text-xl font-medium tracking-tight text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          className="flex items-center text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           aria-label={brand.homeAriaLabel}
         >
-          {brand.name}
+          <Image
+            src="/images/homeservice-logo-blanco.png"
+            alt={brand.name}
+            width={2000}
+            height={800}
+            priority
+            sizes="(max-width: 767px) 132px, 150px"
+            className="h-auto w-[132px] md:w-[150px]"
+          />
         </a>
 
         <ul className="hidden lg:flex items-center gap-10 text-sm tracking-wide">
