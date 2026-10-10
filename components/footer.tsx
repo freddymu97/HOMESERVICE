@@ -35,6 +35,13 @@ export function Footer({ brand, contact, content }: FooterProps) {
                     </a>
                   </li>
                 ) : null}
+                {column.href === "/plomero-quito" ? (
+                  <li>
+                    <a href="/detectordefugasdeaguaquito" className="inline-flex min-h-11 items-center text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground">
+                      Detector de fugas de agua Quito
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             </div>
           ))}

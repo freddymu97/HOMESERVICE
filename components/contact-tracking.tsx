@@ -6,7 +6,7 @@ type ContactClick = {
   event: "contact_click"
   channel: "whatsapp" | "phone"
   page_path: string
-  service: "destape" | "plomeria" | "electricidad" | "home"
+  service: "fugas" | "destape" | "plomeria" | "electricidad" | "home"
   cta_id: string
 }
 
@@ -15,6 +15,7 @@ type TrackingWindow = Window & {
 }
 
 function getService(pathname: string): ContactClick["service"] {
+  if (pathname.startsWith("/detectordefugasdeaguaquito")) return "fugas"
   if (pathname.startsWith("/destapedecaneriasquito")) return "destape"
   if (pathname.startsWith("/plomero-quito")) return "plomeria"
   if (pathname.startsWith("/electricista-quito")) return "electricidad"

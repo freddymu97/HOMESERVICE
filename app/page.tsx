@@ -95,6 +95,14 @@ export default function Home() {
                 url: getPageUrl("/destapedecaneriasquito"),
               },
             },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Detección de fugas de agua en Quito",
+                url: getPageUrl("/detectordefugasdeaguaquito"),
+              },
+            },
           ],
         },
       },
