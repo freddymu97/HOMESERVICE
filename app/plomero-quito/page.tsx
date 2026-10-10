@@ -11,13 +11,11 @@ import { Hero } from "@/components/hero"
 import { Philosophy } from "@/components/philosophy"
 import { Projects } from "@/components/projects"
 import { publicAssetExists } from "@/lib/assets"
-import { PHONE_E164, siteContent } from "@/lib/site-content"
+import { getPageUrl, PHONE_E164, siteContent } from "@/lib/site-content"
 
 const plumbing = siteContent.verticals.plomeria
 const canonical = plumbing.seo.canonical
-const ogImage = publicAssetExists(plumbing.seo.ogImage)
-  ? plumbing.seo.ogImage
-  : plumbing.seo.ogImageFallback
+const ogImage = plumbing.seo.ogImage
 
 export const metadata: Metadata = {
   title: plumbing.seo.title,
@@ -57,10 +55,10 @@ export default function PlumbingPage() {
     "@graph": [
       {
         "@type": "Plumber",
-        "@id": `${canonical}#business`,
+        "@id": `${getPageUrl()}#business`,
         name: siteContent.brand.name,
         telephone: PHONE_E164,
-        url: canonical,
+        url: getPageUrl(),
         areaServed: plumbing.coverage.structuredAreas.map((name) => ({
           "@type": "AdministrativeArea",
           name,
@@ -87,7 +85,7 @@ export default function PlumbingPage() {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Inicio", item: "https://homeservicequito.com/" },
+          { "@type": "ListItem", position: 1, name: "Inicio", item: getPageUrl() },
           { "@type": "ListItem", position: 2, name: "Plomero en Quito", item: canonical },
         ],
       },

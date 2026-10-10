@@ -12,6 +12,7 @@ type ServicesContent = Omit<PageContent["services"], "items"> & {
     id: number
     title: string
     description: string
+    href?: string
     asset: {
       filename: string
       src: string
@@ -65,6 +66,7 @@ export function Projects({ content }: { content: ServicesContent }) {
 
   const renderService = (service: ServicesContent["items"][number]) => {
     const index = content.items.findIndex((item) => item.id === service.id)
+    const Heading = content.groups ? "h4" : "h3"
 
     return (
       <article
@@ -98,11 +100,14 @@ export function Projects({ content }: { content: ServicesContent }) {
 
         <div className="flex items-start justify-between gap-4">
           <div>
-            {content.groups ? (
-              <h4 className="text-xl font-medium mb-2">{service.title}</h4>
-            ) : (
-              <h3 className="text-xl font-medium mb-2">{service.title}</h3>
-            )}
+            <Heading className="mb-2 text-xl font-medium">
+              {service.href ? (
+                <a href={service.href} className="inline-flex min-h-11 items-center gap-2 underline decoration-foreground/25 underline-offset-4 hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground">
+                  {service.title}
+                  <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                </a>
+              ) : service.title}
+            </Heading>
             <p className="text-muted-foreground text-sm">{service.description}</p>
           </div>
           <span className="text-muted-foreground/60 text-sm">0{service.id}</span>
@@ -112,7 +117,7 @@ export function Projects({ content }: { content: ServicesContent }) {
   }
 
   return (
-    <section id={content.id} className="py-32 md:py-29 bg-secondary/50">
+    <section id={content.id} className="bg-secondary/50 py-20 md:py-28">
       <div className="container mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <div className="max-w-3xl">

@@ -10,7 +10,7 @@ import { Hero } from "@/components/hero"
 import { Philosophy } from "@/components/philosophy"
 import { Projects } from "@/components/projects"
 import { publicAssetExists } from "@/lib/assets"
-import { PHONE_E164, siteContent } from "@/lib/site-content"
+import { getPageUrl, PHONE_E164, siteContent } from "@/lib/site-content"
 
 const home = siteContent.verticals.home
 
@@ -76,7 +76,7 @@ export default function Home() {
               itemOffered: {
                 "@type": "Service",
                 name: "Plomería a domicilio",
-                url: "https://homeservicequito.com/plomero-quito",
+                url: getPageUrl("/plomero-quito"),
               },
             },
             {
@@ -84,7 +84,15 @@ export default function Home() {
               itemOffered: {
                 "@type": "Service",
                 name: "Electricidad a domicilio",
-                url: "https://homeservicequito.com/electricista-quito",
+                url: getPageUrl("/electricista-quito"),
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Destape de cañerías en Quito",
+                url: getPageUrl("/destapedecaneriasquito"),
               },
             },
           ],

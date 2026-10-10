@@ -11,11 +11,11 @@ export function FAQ({ content }: { content: PageContent["faq"] }) {
   const toggleQuestion = (index: number) => setOpenIndex(openIndex === index ? null : index)
 
   return (
-    <section id={content.id} className="py-20 md:py-29">
+    <section id={content.id} className="py-20 md:py-28">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-3xl mb-10 md:mb-16">
           <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-6">{content.eyebrow}</p>
-          <h2 className="text-6xl font-medium leading-[1.15] tracking-tight mb-6 text-balance lg:text-7xl">{content.title}</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.15] tracking-tight mb-6 text-balance">{content.title}</h2>
         </div>
 
         <div>
@@ -28,7 +28,7 @@ export function FAQ({ content }: { content: PageContent["faq"] }) {
                 <button
                   type="button"
                   onClick={() => toggleQuestion(index)}
-                  className="w-full py-6 flex items-start justify-between gap-6 text-left group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+                  className="w-full py-6 flex items-start justify-between gap-4 md:gap-6 text-left group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
                   aria-expanded={isOpen}
                   aria-controls={answerId}
                 >
@@ -36,7 +36,7 @@ export function FAQ({ content }: { content: PageContent["faq"] }) {
                   <Plus className={`w-6 h-6 text-foreground flex-shrink-0 transition-transform duration-300 ${isOpen ? "rotate-45" : "rotate-0"}`} strokeWidth={1.5} aria-hidden="true" />
                 </button>
                 <div id={answerId} className={`faq-answer overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
-                  <p className="text-muted-foreground leading-relaxed pb-6 pr-12">{faq.answer}</p>
+                  <p className="text-muted-foreground leading-relaxed pb-6 pr-8 md:pr-12">{faq.answer}</p>
                 </div>
               </div>
             )

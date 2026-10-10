@@ -6,7 +6,7 @@ import { HighlightedText } from "./highlighted-text"
 
 export function CallToAction({ content }: { content: PageContent["coverage"] }) {
   return (
-    <section id={content.id} className="py-32 md:py-29 bg-foreground text-primary-foreground">
+    <section id={content.id} className="bg-foreground py-20 text-primary-foreground md:py-28">
       <div className="container mx-auto px-6 md:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-primary-foreground/60 text-sm tracking-[0.3em] uppercase mb-8">{content.eyebrow}</p>

@@ -2,7 +2,7 @@
 
 import type { HeaderContent, SiteContent } from "@/lib/site-content"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
@@ -14,25 +14,45 @@ type HeaderProps = {
 export function Header({ brand, content }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener("scroll", handleScroll)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const closeMobileMenu = () => setMobileMenuOpen(false)
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+    const desktop = window.matchMedia("(min-width: 1024px)")
+    const onResize = () => { if (desktop.matches) setMobileMenuOpen(false) }
+    window.addEventListener("keydown", onKeyDown)
+    desktop.addEventListener("change", onResize)
+    return () => {
+      window.removeEventListener("keydown", onKeyDown)
+      desktop.removeEventListener("change", onResize)
+    }
+  }, [mobileMenuOpen])
+
   return (
     <header
       className={cn(
-        "fixed z-50 transition-all duration-500 my-0 py-0 rounded-none",
+        "fixed inset-x-0 top-0 z-50 py-4 transition-colors duration-300 md:py-5",
         scrolled || mobileMenuOpen
-          ? "bg-primary backdrop-blur-md py-4 top-4 left-4 right-4 rounded-2xl"
-          : "bg-transparent py-4 top-0 left-0 right-0",
+          ? "bg-primary/95 backdrop-blur-md"
+          : "bg-transparent",
       )}
     >
-      <nav className="container mx-auto px-6 flex items-center justify-between md:px-[24]" aria-label={brand.name}>
+      <nav className="container mx-auto flex items-center justify-between gap-6 px-6 md:px-12" aria-label={brand.name}>
         <a
           href="/"
           className="flex items-center text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
@@ -43,18 +63,17 @@ export function Header({ brand, content }: HeaderProps) {
             alt={brand.name}
             width={2000}
             height={800}
-            priority
             sizes="(max-width: 767px) 132px, 150px"
             className="h-auto w-[132px] md:w-[150px]"
           />
         </a>
 
-        <ul className="hidden lg:flex items-center gap-10 text-sm tracking-wide">
+        <ul className="hidden items-center gap-6 text-sm lg:flex xl:gap-8">
           {content.navigation.map((item) => (
             <li key={item.label}>
               <a
                 href={item.href}
-                className="hover:text-[rgb(251,146,60)] transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:bg-[rgb(251,146,60)] after:transition-all after:duration-300 text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                className="inline-flex min-h-11 items-center text-white transition-colors hover:text-[rgb(251,146,60)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
                 {item.label}
               </a>
@@ -68,19 +87,15 @@ export function Header({ brand, content }: HeaderProps) {
           rel="noopener"
           aria-label={content.cta.ariaLabel}
           data-analytics={content.cta.analytics}
-          className={cn(
-            "hidden lg:inline-flex items-center gap-2 whitespace-nowrap text-sm px-5 py-2.5 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white",
-            scrolled
-              ? "bg-white text-foreground border border-foreground/20 hover:bg-foreground hover:text-white"
-              : "bg-white text-foreground border border-foreground/20 hover:bg-foreground hover:text-white",
-          )}
+          className="hidden min-h-11 shrink-0 items-center justify-center bg-white px-5 py-3 text-sm text-foreground transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white lg:inline-flex"
         >
           {content.cta.label}
         </a>
 
         <button
           type="button"
-          className="mobile-menu-button lg:hidden z-50 transition-colors duration-300 text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          ref={menuButtonRef}
+          className="mobile-menu-button inline-flex h-11 w-11 shrink-0 items-center justify-center text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white lg:hidden"
           aria-label={mobileMenuOpen ? content.closeMenuAriaLabel : content.openMenuAriaLabel}
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-navigation"
@@ -102,18 +117,19 @@ export function Header({ brand, content }: HeaderProps) {
 
       <div
         id="mobile-navigation"
+        inert={!mobileMenuOpen}
         className={cn(
-          "mobile-navigation-no-js lg:hidden overflow-hidden transition-all duration-300 ease-in-out",
-          mobileMenuOpen ? "max-h-[600px] opacity-100 mt-8" : "max-h-0 opacity-0",
+          "mobile-navigation-no-js overflow-y-auto transition-all duration-300 ease-in-out lg:hidden",
+          mobileMenuOpen ? "mt-6 max-h-[calc(100svh-100px)] opacity-100" : "max-h-0 opacity-0",
         )}
       >
         <div className="container mx-auto px-6">
-          <ul className="flex flex-col gap-6 mb-8">
+          <ul className="mb-6 flex flex-col gap-2">
             {content.navigation.map((item) => (
               <li key={item.label}>
                 <a
                   href={item.href}
-                  className="hover:text-[rgb(251,146,60)] transition-colors duration-300 text-white text-4xl font-light block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                  className="block py-2 text-2xl font-medium text-white transition-colors hover:text-[rgb(251,146,60)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                   onClick={closeMobileMenu}
                 >
                   {item.label}
@@ -135,6 +151,19 @@ export function Header({ brand, content }: HeaderProps) {
           </a>
         </div>
       </div>
+      <noscript>
+        <nav aria-label="Navegación móvil" className="container mx-auto px-6 pb-2 pt-4 lg:hidden">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1">
+            {content.navigation.map((item) => (
+              <li key={item.label}>
+                <a href={item.href} className="inline-flex min-h-11 items-center text-sm text-white underline underline-offset-4">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </noscript>
     </header>
   )
 }
