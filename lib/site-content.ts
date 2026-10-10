@@ -1,8 +1,12 @@
 export const PHONE_E164 = "+593982811068"
 export const PHONE_WA = "593982811068"
-export const SITE_URL = (
+const configuredSiteUrl = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.homeservicequito.com"
 ).replace(/\/+$/, "")
+// The public apex redirects to www; keep legacy environment values off redirecting canonicals.
+export const SITE_URL = configuredSiteUrl === "https://homeservicequito.com"
+  ? "https://www.homeservicequito.com"
+  : configuredSiteUrl
 
 export const HOURS = {
   label: "Todos los días, 7:30 a 19:30",
@@ -52,6 +56,7 @@ export const siteContent = {
         { label: "Inicio", href: "/" },
         { label: "Plomería", href: "/plomero-quito" },
         { label: "Destape", href: "/destapedecaneriasquito" },
+        { label: "Fugas", href: "/detectordefugasdeaguaquito" },
         { label: "Electricidad", href: "/electricista-quito" },
         { label: "Cobertura", href: "#cobertura" },
         { label: "Preguntas", href: "#preguntas" },
@@ -70,6 +75,7 @@ export const siteContent = {
         { label: "Inicio", href: "/" },
         { label: "Plomería", href: "/plomero-quito" },
         { label: "Destape", href: "/destapedecaneriasquito" },
+        { label: "Fugas", href: "/detectordefugasdeaguaquito" },
         { label: "Electricidad", href: "/electricista-quito" },
         { label: "Cobertura", href: "#cobertura" },
         { label: "Preguntas", href: "#preguntas" },
@@ -88,6 +94,7 @@ export const siteContent = {
         { label: "Inicio", href: "/" },
         { label: "Plomería", href: "/plomero-quito" },
         { label: "Destape", href: "/destapedecaneriasquito" },
+        { label: "Fugas", href: "/detectordefugasdeaguaquito" },
         { label: "Electricidad", href: "/electricista-quito" },
         { label: "Cobertura", href: "#cobertura" },
         { label: "Preguntas", href: "#preguntas" },
@@ -168,12 +175,12 @@ export const siteContent = {
             id: 1,
             title: "Fugas de agua",
             description: "Ubicación y reparación de fugas en tuberías, paredes, pisos y cisternas.",
+            href: "/detectordefugasdeaguaquito",
             asset: responsiveServiceAsset(
               "fugas-de-agua-desktop.jpg",
               "fugas-de-agua-movil.jpg",
               "Técnico de HomeService reparando una fuga de agua en Quito",
             ),
-            // slug: "fugas-de-agua",
           },
           {
             id: 2,
@@ -424,6 +431,7 @@ export const siteContent = {
             id: 1,
             title: "Fugas de agua",
             description: "Ubicación y reparación de fugas en tuberías, paredes y pisos.",
+            href: "/detectordefugasdeaguaquito",
             asset: responsiveServiceAsset(
               "fugas-de-agua-desktop.jpg",
               "fugas-de-agua-movil.jpg",

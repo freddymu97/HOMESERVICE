@@ -13,6 +13,7 @@ export const drainHeader = {
     { label: "Inicio", href: "/" },
     { label: "Plomería", href: "/plomero-quito" },
     { label: "Destape", href: "/destapedecaneriasquito" },
+    { label: "Fugas", href: "/detectordefugasdeaguaquito" },
     { label: "Electricidad", href: "/electricista-quito" },
     { label: "Cobertura", href: "#cobertura" },
     { label: "Preguntas", href: "#preguntas" },

@@ -33,7 +33,7 @@ export function Header({ brand, content }: HeaderProps) {
         menuButtonRef.current?.focus()
       }
     }
-    const desktop = window.matchMedia("(min-width: 1024px)")
+    const desktop = window.matchMedia("(min-width: 1280px)")
     const onResize = () => { if (desktop.matches) setMobileMenuOpen(false) }
     window.addEventListener("keydown", onKeyDown)
     desktop.addEventListener("change", onResize)
@@ -68,7 +68,7 @@ export function Header({ brand, content }: HeaderProps) {
           />
         </a>
 
-        <ul className="hidden items-center gap-6 text-sm lg:flex xl:gap-8">
+        <ul className="hidden items-center gap-6 text-sm xl:flex 2xl:gap-8">
           {content.navigation.map((item) => (
             <li key={item.label}>
               <a
@@ -87,7 +87,7 @@ export function Header({ brand, content }: HeaderProps) {
           rel="noopener"
           aria-label={content.cta.ariaLabel}
           data-analytics={content.cta.analytics}
-          className="hidden min-h-11 shrink-0 items-center justify-center bg-white px-5 py-3 text-sm text-foreground transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white lg:inline-flex"
+          className="hidden min-h-11 shrink-0 items-center justify-center bg-white px-5 py-3 text-sm text-foreground transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white xl:inline-flex"
         >
           {content.cta.label}
         </a>
@@ -95,7 +95,7 @@ export function Header({ brand, content }: HeaderProps) {
         <button
           type="button"
           ref={menuButtonRef}
-          className="mobile-menu-button inline-flex h-11 w-11 shrink-0 items-center justify-center text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white lg:hidden"
+          className="mobile-menu-button inline-flex h-11 w-11 shrink-0 items-center justify-center text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white xl:hidden"
           aria-label={mobileMenuOpen ? content.closeMenuAriaLabel : content.openMenuAriaLabel}
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-navigation"
@@ -119,7 +119,7 @@ export function Header({ brand, content }: HeaderProps) {
         id="mobile-navigation"
         inert={!mobileMenuOpen}
         className={cn(
-          "mobile-navigation-no-js overflow-y-auto transition-all duration-300 ease-in-out lg:hidden",
+          "mobile-navigation-no-js overflow-y-auto transition-all duration-300 ease-in-out xl:hidden",
           mobileMenuOpen ? "mt-6 max-h-[calc(100svh-100px)] opacity-100" : "max-h-0 opacity-0",
         )}
       >
@@ -152,7 +152,7 @@ export function Header({ brand, content }: HeaderProps) {
         </div>
       </div>
       <noscript>
-        <nav aria-label="Navegación móvil" className="container mx-auto px-6 pb-2 pt-4 lg:hidden">
+        <nav aria-label="Navegación móvil" className="container mx-auto px-6 pb-2 pt-4 xl:hidden">
           <ul className="flex flex-wrap gap-x-5 gap-y-1">
             {content.navigation.map((item) => (
               <li key={item.label}>

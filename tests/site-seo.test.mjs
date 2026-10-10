@@ -9,6 +9,8 @@ import { after, before, test } from "node:test"
 
 const require = createRequire(import.meta.url)
 const site = new URL(`${(process.env.NEXT_PUBLIC_SITE_URL || "https://www.homeservicequito.com").replace(/\/+$/, "")}/`)
+if (site.href === "https://homeservicequito.com/") site.hostname = "www.homeservicequito.com"
+const servicePaths = ["/", "/plomero-quito", "/electricista-quito", "/destapedecaneriasquito", "/detectordefugasdeaguaquito"]
 let server
 let base
 let logs = ""
@@ -17,6 +19,22 @@ function elements(html, tag) {
   return [...html.matchAll(new RegExp(`<${tag}\\b([^>]+)>`, "g"))].map((match) =>
     Object.fromEntries([...match[1].matchAll(/([\w:-]+)="([^"]*)"/g)].map((a) => [a[1], a[2]])),
   )
+}
+
+function textContent(html) {
+  return html.replace(/<[^>]*>/g, " ")
+    .replace(/&(?:amp|quot|apos|lt|gt|#39);/g, (entity) => ({
+      "&amp;": "&", "&quot;": '"', "&apos;": "'", "&lt;": "<", "&gt;": ">", "&#39;": "'",
+    })[entity])
+    .replace(/\s+/g, " ").trim()
+}
+
+function section(html, id) {
+  const start = html.indexOf(`id="${id}"`)
+  assert.notEqual(start, -1, `Missing section: ${id}`)
+  const end = html.indexOf("</section>", start)
+  assert.notEqual(end, -1, `Missing closing section: ${id}`)
+  return html.slice(start, end)
 }
 
 async function request(path) {
@@ -57,20 +75,27 @@ after(async () => {
 
 test("all service pages render with one H1 and a consistent, unique canonical", async () => {
   const titles = new Set()
-  for (const path of ["/", "/plomero-quito", "/electricista-quito", "/destapedecaneriasquito"]) {
+  const descriptions = new Set()
+  const headings = new Set()
+  for (const path of servicePaths) {
     const response = await request(path)
     assert.equal(response.status, 200, path)
     const html = await response.text()
     assert.equal([...html.matchAll(/<h1\b/g)].length, 1, path)
+    headings.add(textContent(html.match(/<h1\b[^>]*>(.*?)<\/h1>/s)[1]))
     const canonical = elements(html, "link").filter((a) => a.rel === "canonical")
     assert.equal(canonical.length, 1, path)
     assert.equal(new URL(canonical[0].href).href, new URL(path, site).href)
     const title = html.match(/<title>(.*?)<\/title>/s)?.[1]
     assert.ok(title?.includes("HomeService"), path)
     titles.add(title)
-    assert.ok(elements(html, "meta").some((a) => a.name === "description" && a.content.length > 60), path)
+    const description = elements(html, "meta").find((a) => a.name === "description")?.content
+    assert.ok(description?.length > 60, path)
+    descriptions.add(description)
   }
-  assert.equal(titles.size, 4, "Each service intent needs its own title")
+  assert.equal(titles.size, servicePaths.length, "Each service intent needs its own title")
+  assert.equal(descriptions.size, servicePaths.length, "Each service intent needs its own description")
+  assert.equal(headings.size, servicePaths.length, "Each service intent needs its own H1")
 })
 
 test("the drain landing renders its keyword groups, prices and contact options without JavaScript", async () => {
@@ -114,20 +139,77 @@ test("structured data quotes the inspection separately from the drain service", 
   }
 })
 
-test("home and plumbing link contextually to the drain landing", async () => {
-  for (const path of ["/", "/plomero-quito"]) {
-    const html = await (await request(path)).text()
-    const services = html.split('id="servicios"')[1].split("</section>")[0]
-    assert.ok(elements(services, "a").some((a) => a.href === "/destapedecaneriasquito"), path)
+test("the leak landing renders detection, equipment and repair information without JavaScript", async () => {
+  const html = await (await request("/detectordefugasdeaguaquito")).text()
+  assert.match(html, /<title>Detector de fugas de agua Quito \| HomeService<\/title>/)
+  for (const id of ["servicios", "sin-romper", "equipos", "reparacion", "costo", "cobertura", "preguntas"]) {
+    assert.match(html, new RegExp(`id="${id}"`))
+  }
+  const equipment = textContent(section(html, "equipos"))
+  assert.match(equipment, /geófono/i)
+  assert.match(equipment, /cámara termográfica/i)
+  const pricing = textContent(section(html, "costo"))
+  assert.match(pricing, /revisión desde/i)
+  assert.match(pricing, /\$19\.99/)
+  assert.match(pricing, /detección/i)
+  assert.match(pricing, /reparación/i)
+  assert.match(pricing, /cotiza/i)
+  assert.match(pricing, /separado/i)
+  assert.ok(elements(html, "a").some((a) => a.href?.startsWith("https://wa.me/") && a["data-analytics"]))
+  assert.ok(elements(html, "a").some((a) => a.href === "tel:+593982811068"))
+  const robots = elements(html, "meta").find((a) => a.name === "robots")
+  assert.match(robots.content, /index/)
+  assert.doesNotMatch(robots.content, /noindex/)
+})
+
+test("leak structured data separates detection, inspection and repair and matches visible FAQs", async () => {
+  const html = await (await request("/detectordefugasdeaguaquito")).text()
+  const graph = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])["@graph"]
+  const canonical = new URL("detectordefugasdeaguaquito", site).href
+  const business = graph.find((item) => item["@id"] === `${site.href}#business`)
+  assert.equal(business.telephone, "+593982811068")
+  const detection = graph.find((item) => item["@id"] === `${canonical}#service`)
+  assert.equal(detection["@type"], "Service")
+  assert.equal(detection.provider["@id"], business["@id"])
+  assert.equal(detection.offers, undefined, "The inspection fee is not a fixed detection price")
+  const webpage = graph.find((item) => item["@type"] === "WebPage")
+  assert.equal(webpage.mainEntity["@id"], detection["@id"])
+  const inspection = graph.find((item) => item["@id"] === `${canonical}#revision`)
+  assert.equal(inspection["@type"], "Service")
+  assert.equal(inspection.offers.priceSpecification.minPrice, 19.99)
+  assert.equal(inspection.offers.priceSpecification.priceCurrency, "USD")
+  const repair = graph.find((item) => item["@id"] === `${canonical}#reparacion`)
+  assert.equal(repair["@type"], "Service")
+  assert.equal(repair.provider["@id"], business["@id"])
+  assert.equal(repair.offers, undefined, "Repair requires its own quote")
+  assert.equal(repair.price, undefined)
+  const faq = graph.find((item) => item["@type"] === "FAQPage")
+  assert.equal(faq.mainEntity.length, 6)
+  const visibleFaq = textContent(section(html, "preguntas"))
+  for (const question of faq.mainEntity) {
+    assert.ok(visibleFaq.includes(textContent(question.name)), question.name)
+    assert.ok(visibleFaq.includes(textContent(question.acceptedAnswer.text)), question.name)
   }
 })
 
-test("sitemap and robots advertise the same primary domain and drain URL", async () => {
+test("home and plumbing link contextually to the drain and leak landings", async () => {
+  for (const path of ["/", "/plomero-quito"]) {
+    const html = await (await request(path)).text()
+    const services = section(html, "servicios")
+    for (const servicePath of ["/destapedecaneriasquito", "/detectordefugasdeaguaquito"]) {
+      assert.ok(elements(services, "a").some((a) => a.href === servicePath), `${path} → ${servicePath}`)
+    }
+  }
+})
+
+test("sitemap and robots advertise all five pages on the same primary domain", async () => {
   const sitemapResponse = await request("/sitemap.xml")
   assert.equal(sitemapResponse.status, 200)
   const sitemap = await sitemapResponse.text()
-  assert.ok(sitemap.includes(new URL("destapedecaneriasquito", site).href))
-  for (const url of [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1])) {
+  const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1])
+  assert.equal(urls.length, servicePaths.length)
+  assert.deepEqual(new Set(urls), new Set(servicePaths.map((path) => new URL(path, site).href)))
+  for (const url of urls) {
     assert.equal(new URL(url).origin, site.origin)
   }
   const robotsResponse = await request("/robots.txt")
@@ -136,7 +218,7 @@ test("sitemap and robots advertise the same primary domain and drain URL", async
 })
 
 test("social images exist at the advertised size and the brand icon renders", async () => {
-  for (const path of ["/opengraph-image", "/destapedecaneriasquito/opengraph-image"]) {
+  for (const path of ["/opengraph-image", "/destapedecaneriasquito/opengraph-image", "/detectordefugasdeaguaquito/opengraph-image"]) {
     const response = await request(path)
     assert.equal(response.status, 200, path)
     assert.match(response.headers.get("content-type"), /image\/png/)
@@ -150,16 +232,22 @@ test("social images exist at the advertised size and the brand icon renders", as
 })
 
 test("mobile service imagery can be served as a small optimized WebP", async () => {
-  const response = await fetch(`${base}/_next/image?url=%2Fimages%2Fdestape-desagues-movil.png&w=640&q=75`, {
-    headers: { Accept: "image/webp" },
-    signal: AbortSignal.timeout(10000),
-  })
-  assert.equal(response.status, 200)
-  assert.match(response.headers.get("content-type"), /image\/webp/)
-  const image = Buffer.from(await response.arrayBuffer())
-  assert.equal(image.toString("ascii", 0, 4), "RIFF")
-  assert.equal(image.toString("ascii", 8, 12), "WEBP")
-  assert.ok(image.length > 1000 && image.length < 300000, "Mobile image should not download the original 2 MB PNG")
+  for (const filename of ["destape-desagues-movil.png", "fugas-de-agua-movil.jpg"]) {
+    const source = `/images/${filename}`
+    const originalResponse = await request(source)
+    assert.equal(originalResponse.status, 200, source)
+    const original = Buffer.from(await originalResponse.arrayBuffer())
+    const response = await fetch(`${base}/_next/image?url=${encodeURIComponent(source)}&w=640&q=75`, {
+      headers: { Accept: "image/webp" },
+      signal: AbortSignal.timeout(10000),
+    })
+    assert.equal(response.status, 200, source)
+    assert.match(response.headers.get("content-type"), /image\/webp/)
+    const image = Buffer.from(await response.arrayBuffer())
+    assert.equal(image.toString("ascii", 0, 4), "RIFF")
+    assert.equal(image.toString("ascii", 8, 12), "WEBP")
+    assert.ok(image.length < original.length, `${source} should be smaller after mobile optimization`)
+  }
 })
 
 test("legacy service URLs keep permanent redirects and missing pages return 404", async () => {
