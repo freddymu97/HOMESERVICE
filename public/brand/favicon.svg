@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>HomeService</title>
+  <rect width="64" height="64" rx="12" fill="#24211e"/>
+  <path d="M12 30 32 12 52 30M18 27v24h28V27M27 51V36h10v15" fill="none" stroke="#f7f4ee" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

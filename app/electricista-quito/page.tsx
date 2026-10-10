@@ -11,13 +11,11 @@ import { Hero } from "@/components/hero"
 import { Philosophy } from "@/components/philosophy"
 import { Projects } from "@/components/projects"
 import { publicAssetExists } from "@/lib/assets"
-import { PHONE_E164, siteContent } from "@/lib/site-content"
+import { getPageUrl, PHONE_E164, siteContent } from "@/lib/site-content"
 
 const electricity = siteContent.verticals.electricidad
 const canonical = electricity.seo.canonical
-const ogImage = publicAssetExists(electricity.seo.ogImage)
-  ? electricity.seo.ogImage
-  : electricity.seo.ogImageFallback
+const ogImage = electricity.seo.ogImage
 
 export const metadata: Metadata = {
   title: electricity.seo.title,
@@ -57,10 +55,10 @@ export default function ElectricityPage() {
     "@graph": [
       {
         "@type": "Electrician",
-        "@id": `${canonical}#business`,
+        "@id": `${getPageUrl()}#business`,
         name: siteContent.brand.name,
         telephone: PHONE_E164,
-        url: canonical,
+        url: getPageUrl(),
         areaServed: electricity.coverage.structuredAreas.map((name) => ({
           "@type": "AdministrativeArea",
           name,
@@ -87,7 +85,7 @@ export default function ElectricityPage() {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Inicio", item: "https://homeservicequito.com/" },
+          { "@type": "ListItem", position: 1, name: "Inicio", item: getPageUrl() },
           { "@type": "ListItem", position: 2, name: "Electricista en Quito", item: canonical },
         ],
       },

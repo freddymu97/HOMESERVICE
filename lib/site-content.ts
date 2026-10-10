@@ -1,7 +1,7 @@
 export const PHONE_E164 = "+593982811068"
 export const PHONE_WA = "593982811068"
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://homeservicequito.com"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.homeservicequito.com"
 ).replace(/\/+$/, "")
 
 export const HOURS = {
@@ -51,6 +51,7 @@ export const siteContent = {
       navigation: [
         { label: "Inicio", href: "/" },
         { label: "Plomería", href: "/plomero-quito" },
+        { label: "Destape", href: "/destapedecaneriasquito" },
         { label: "Electricidad", href: "/electricista-quito" },
         { label: "Cobertura", href: "#cobertura" },
         { label: "Preguntas", href: "#preguntas" },
@@ -68,6 +69,7 @@ export const siteContent = {
       navigation: [
         { label: "Inicio", href: "/" },
         { label: "Plomería", href: "/plomero-quito" },
+        { label: "Destape", href: "/destapedecaneriasquito" },
         { label: "Electricidad", href: "/electricista-quito" },
         { label: "Cobertura", href: "#cobertura" },
         { label: "Preguntas", href: "#preguntas" },
@@ -85,6 +87,7 @@ export const siteContent = {
       navigation: [
         { label: "Inicio", href: "/" },
         { label: "Plomería", href: "/plomero-quito" },
+        { label: "Destape", href: "/destapedecaneriasquito" },
         { label: "Electricidad", href: "/electricista-quito" },
         { label: "Cobertura", href: "#cobertura" },
         { label: "Preguntas", href: "#preguntas" },
@@ -121,9 +124,9 @@ export const siteContent = {
         title: "Plomero en Quito a domicilio | Fugas, destapes y grifería | HomeService",
         description:
           "Plomeros a domicilio en Quito y valles: fugas de agua, cañerías tapadas, grifería, sanitarios y tuberías. Atendemos todos los días de 7:30 a 19:30.",
-        canonical: "https://homeservicequito.com/plomero-quito",
-        ogImage: "/brand/og-image-plomeria.jpg",
-        ogImageFallback: "/brand/og-image.jpg",
+        canonical: getPageUrl("/plomero-quito"),
+        ogImage: "/opengraph-image",
+        ogImageFallback: "/opengraph-image",
         ogImageAlt: "HomeService, plomería a domicilio en Quito",
       },
       hero: {
@@ -176,6 +179,7 @@ export const siteContent = {
             id: 2,
             title: "Cañerías y desagües tapados",
             description: "Destape de inodoros, fregaderos, duchas, sifones y cajas de revisión.",
+            href: "/destapedecaneriasquito",
             asset: responsiveServiceAsset(
               "destape-desagues-movil.png",
               "destape-desagues-desktop.png",
@@ -381,21 +385,21 @@ export const siteContent = {
         title: "HomeService | Plomería y electricidad a domicilio en Quito",
         description:
           "Servicio a domicilio de plomería y electricidad en Quito y valles. Fugas, destapes, grifería, cortocircuitos, tableros e instalaciones. Todos los días de 7:30 a 19:30.",
-        canonical: "https://homeservicequito.com/",
-        ogImage: "/brand/og-image.jpg",
+        canonical: getPageUrl(),
+        ogImage: "/opengraph-image",
         ogImageAlt: "HomeService, plomería y electricidad a domicilio en Quito",
       },
       hero: {
-        eyebrow: "HOMESERVICE · ASISTENCIA A DOMICILIO EN QUITO",
+        eyebrow: "HOMESERVICE · QUITO Y VALLES",
         title: "Plomería y electricidad a domicilio en Quito",
         subtitleMobile:
-          "Un solo contacto para los dos problemas que no pueden esperar en casa: el agua y la luz. Atendemos casas, departamentos, oficinas y locales de Quito y sus valles",
+          "Soluciones para el agua y la luz de tu hogar. Un solo equipo, un costo claro antes de empezar",
         subtitleDesktopEnd: "",
         microcopy:
           "Revisamos, te explicamos qué tiene la instalación y conversamos el costo antes de empezar.",
-        chips: ["Plomería. Electricidad.", HOURS.sevenDays],
+        chips: ["Todos los días · 7:30 a 19:30"],
         primaryCta: {
-          label: "Solicitar servicio por WhatsApp",
+          label: "Solicitar servicio",
           href: whatsappHref(
             "Hola HomeService, necesito ayuda con un problema en casa. El servicio que necesito es: ",
           ),
@@ -430,6 +434,7 @@ export const siteContent = {
             id: 2,
             title: "Cañerías y desagües tapados",
             description: "Destape de inodoros, fregaderos, duchas y cajas de revisión.",
+            href: "/destapedecaneriasquito",
             asset: responsiveServiceAsset(
               "destape-desagues-movil.png",
               "destape-desagues-desktop.png",
@@ -592,9 +597,9 @@ export const siteContent = {
         title: "Electricista en Quito a domicilio | Cortocircuitos y tableros | HomeService",
         description:
           "Electricista a domicilio en Quito y valles: cortocircuitos, tableros, breakers, puntos de luz, puesta a tierra e instalaciones. Atendemos todos los días de 7:30 a 19:30.",
-        canonical: "https://homeservicequito.com/electricista-quito",
-        ogImage: "/brand/og-image-electricidad.jpg",
-        ogImageFallback: "/brand/og-image.jpg",
+        canonical: getPageUrl("/electricista-quito"),
+        ogImage: "/opengraph-image",
+        ogImageFallback: "/opengraph-image",
         ogImageAlt: "HomeService, electricidad a domicilio en Quito",
       },
       hero: {
@@ -853,4 +858,8 @@ export type ServiceItem = PageContent["services"]["items"][number]
 
 export function getSiteUrl() {
   return new URL(`${SITE_URL}/`)
+}
+
+export function getPageUrl(path = "/") {
+  return new URL(path, getSiteUrl()).toString()
 }

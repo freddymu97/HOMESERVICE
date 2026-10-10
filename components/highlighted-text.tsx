@@ -23,16 +23,16 @@ export function HighlightedText({ children }: { children: React.ReactNode }) {
 
     return () => observer.disconnect()
   }, [])
-  // </CHANGE>
-
   return (
-    <span ref={spanRef} className="relative inline-block">
+    <span ref={spanRef} className="relative inline-block max-w-full break-words">
       {children}
       <svg
         className="absolute -bottom-1 left-0 w-full h-4 overflow-visible"
         viewBox="0 0 200 12"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        focusable="false"
       >
         <path
           d="M0 8 Q50 2, 100 6 T200 8"
@@ -48,7 +48,6 @@ export function HighlightedText({ children }: { children: React.ReactNode }) {
           }}
         />
       </svg>
-      {/* </CHANGE> */}
     </span>
   )
 }

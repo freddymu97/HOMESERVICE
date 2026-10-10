@@ -28,6 +28,13 @@ export function Footer({ brand, contact, content }: FooterProps) {
               </h2>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 {column.items.map((item) => <li key={item}>{item}</li>)}
+                {column.href === "/plomero-quito" ? (
+                  <li>
+                    <a href="/destapedecaneriasquito" className="inline-flex min-h-11 items-center text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground">
+                      Destape de cañerías Quito
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             </div>
           ))}
@@ -36,12 +43,12 @@ export function Footer({ brand, contact, content }: FooterProps) {
             <h2 className="text-sm font-medium mb-4">{content.contactHeading}</h2>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
-                <a href={contact.whatsappHref} target="_blank" rel="noopener" className="hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground">
+                <a href={contact.whatsappHref} target="_blank" rel="noopener" data-analytics="cta_whatsapp_footer_click" className="inline-flex min-h-11 items-center hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground">
                   {contact.whatsappLabel}: {contact.phoneDisplay}
                 </a>
               </li>
               <li>
-                <a href={contact.phoneHref} className="hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground">
+                <a href={contact.phoneHref} data-analytics="cta_llamada_footer_click" className="inline-flex min-h-11 items-center hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground">
                   {contact.phoneLabel}: {contact.phoneDisplay}
                 </a>
               </li>

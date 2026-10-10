@@ -1,8 +1,27 @@
+"use client"
+
 import type { PageContent } from "@/lib/site-content"
+
+import { useEffect, useState } from "react"
 
 import { MessageCircle } from "lucide-react"
 
 export function FloatingCTA({ content }: { content: PageContent["floatingCta"] }) {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const hero = document.getElementById("hero")
+    if (!hero) {
+      setVisible(true)
+      return
+    }
+    const observer = new IntersectionObserver(([entry]) => setVisible(!entry.isIntersecting))
+    observer.observe(hero)
+    return () => observer.disconnect()
+  }, [])
+
+  if (!visible) return null
+
   return (
     <a
       href={content.href}
@@ -10,7 +29,7 @@ export function FloatingCTA({ content }: { content: PageContent["floatingCta"] }
       rel="noopener"
       aria-label={content.ariaLabel}
       data-analytics={content.analytics}
-      className="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 bg-foreground px-4 py-3 text-sm text-primary-foreground shadow-lg transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+      className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-5 z-40 inline-flex min-h-12 items-center gap-2 bg-foreground px-4 py-3 text-sm text-primary-foreground shadow-lg transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
     >
       <MessageCircle className="h-5 w-5" aria-hidden="true" />
       <span className="hidden sm:inline">{content.label}</span>

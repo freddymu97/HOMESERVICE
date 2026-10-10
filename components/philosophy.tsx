@@ -34,13 +34,13 @@ export function Philosophy({ content, image }: PhilosophyProps) {
   }, [])
 
   return (
-    <section id={content.id} className="py-32 md:py-29">
+    <section id={content.id} className="py-20 md:py-28">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="grid lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-6">{content.eyebrow}</p>
-            <h2 className="text-6xl md:text-6xl font-medium leading-[1.15] tracking-tight mb-6 text-balance lg:text-8xl">
-              {content.titleBeforeHighlight}
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.15] tracking-tight mb-6 text-balance">
+              {content.titleBeforeHighlight}{" "}
               <br />
               <HighlightedText>{content.titleHighlight}</HighlightedText>
             </h2>
@@ -51,7 +51,7 @@ export function Philosophy({ content, image }: PhilosophyProps) {
           </div>
 
           <div className="space-y-6 lg:pt-48">
-            <p className="text-muted-foreground text-lg leading-relaxed max-w-md mb-12">{content.intro}</p>
+            <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-md mb-8 md:mb-12">{content.intro}</p>
 
             {content.items.map((item, index) => (
               <div
@@ -66,7 +66,7 @@ export function Philosophy({ content, image }: PhilosophyProps) {
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="flex gap-6">
-                  <span className="text-muted-foreground/50 text-sm font-medium">0{index + 1}</span>
+                  <span className="text-muted-foreground text-sm font-medium" aria-hidden="true">0{index + 1}</span>
                   <div>
                     <h3 className="text-xl font-medium mb-3">{item.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">{item.description}</p>

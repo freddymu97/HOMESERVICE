@@ -32,19 +32,19 @@ export function Expertise({ content }: { content: PageContent["reasons"] }) {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-32 md:py-29">
+    <section ref={sectionRef} className="py-20 md:py-28">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="max-w-3xl mb-20">
+        <div className="max-w-3xl mb-12 md:mb-16">
           <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-6">{content.eyebrow}</p>
-          <h2 className="text-6xl font-medium leading-[1.15] tracking-tight mb-6 text-balance lg:text-8xl">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.15] tracking-tight mb-6 text-balance">
             {content.titleBeforeHighlight}
             <br />
             <HighlightedText>{content.titleHighlight}</HighlightedText>
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">{content.intro}</p>
+          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">{content.intro}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
+        <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 md:gap-y-16">
           {content.items.map((item, index) => {
             const Icon = reasonIcons[index]
             return (
